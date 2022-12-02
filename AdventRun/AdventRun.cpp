@@ -1,22 +1,99 @@
-// AdventRun.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+// System
+#include <fstream>
 #include <iostream>
-#include <AdventLib.h>
+#include <span>
 
-int main()
+// AdventLib
+#include <DayOne.h>
+
+//------------------------------------------------------------------------------
+// Local Declarations
+namespace
 {
-    std::cout << "Hello World!\n";
-    fnAdventLib(10);
+    enum class CommandLineArgs : unsigned int
+    {
+        File = 1,
+        ExpectedCount
+    };
+
+    class CommandLineParser
+    {
+    public:
+        explicit CommandLineParser(const std::span<char*> &args);
+      
+        std::ifstream mFile;
+    };
+
+    // int ParseCommandLine(int argc, char** argv);
+
+
+    //------------------------------------------------------------------------------
+    // Puzzles
+    void DoDayOne();
+
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int main(int argc, char** argv) 
+{
+    
+  //  return ParseCommandLine(argc, argv);
+    (void)argc;
+    (void)argv;
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    DoDayOne();
+
+    return 0;
+}
+
+namespace
+{
+    //------------------------------------------------------------------------------
+    // CommandLineParser Implementation
+    CommandLineParser::CommandLineParser(const std::span<char*>& args)
+        : mFile(args[static_cast<size_t>(CommandLineArgs::File)])
+    {
+
+    }
+    
+    //------------------------------------------------------------------------------
+/*
+    int ParseCommandLine(int argc, char** argv)
+    {
+        auto args = std::span(argv, static_cast<size_t>(argc));
+
+        if (args.size() != static_cast<size_t>(CommandLineArgs::ExpectedCount))
+        {
+            std::cerr << "This program expects one parameter that is the input file to read.\n";
+            return 1;
+        }
+
+        CommandLineParser parser(args);
+
+        if (!parser.mFile.is_open())
+        {
+            std::cerr << "Failed to open file.\n";
+            return 1;
+        }
+
+        return 0;
+    }
+*/
+
+    //------------------------------------------------------------------------------
+    // DoDayOne
+    void DoDayOne()
+    { 
+        const std::string fileName = R"(T:\dev\Advent\AdventLib\DayOne\input.txt)";
+        std::ifstream file(fileName);
+
+        if (!file.is_open())
+        {
+            std::cerr << "Failed to open file.\n";
+            return;
+        }
+
+        DayOne::Puzzle puzzle;
+        puzzle.DoPuzzle(file);
+    }
+
+}
