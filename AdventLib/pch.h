@@ -11,5 +11,6 @@
 
 // add headers that you want to pre-compile here
 
+#include <cstdint>
 
 #endif //PCH_H

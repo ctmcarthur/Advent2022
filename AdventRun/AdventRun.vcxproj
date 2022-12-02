@@ -145,12 +145,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdventCalendar.cpp" />
     <ClCompile Include="AdventRun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AdventLib\AdventLib.vcxproj">
       <Project>{8fb59369-ff29-4d98-9dd4-c34c673c4129}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdventCalendar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
