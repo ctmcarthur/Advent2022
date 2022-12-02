@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "DayOne.h"
 
+#include <Utilities/Input.h>
+
 // System
 #include <numeric>
 #include <algorithm>
@@ -103,4 +105,20 @@ namespace DayOne
         const unsigned int calSum = std::accumulate(mElfs.begin(), mElfs.begin() + count, 0, ElfSum);
         return calSum;
     }
+
+
+    void DoPartOne(const std::string& filename)
+    {
+        auto fileLines = Utilities::ReadAllLinesInFile(filename);
+        std::vector<uint32_t> calories; 
+        
+        calories.push_back(0);
+        auto currentElf = calories.end() - 1;
+
+        for (const auto& line : fileLines)
+        {
+            (void)line;
+        }
+    }
+    void DoPartTwo(const std::string& /*filename*/) {}
 }

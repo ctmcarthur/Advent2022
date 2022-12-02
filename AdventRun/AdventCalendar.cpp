@@ -1,38 +1,79 @@
 #include "pch.h"
 #include "AdventCalendar.h"
 
+#include <AdventLib.h>
+
+// System
+#include <chrono>
+#include <iostream>
+#include <sstream>
+
 //------------------------------------------------------------------------------
 // local decl
 namespace
 {
+    template<class T>
+    bool HasOption(std::initializer_list<T> options, T option)
+    {
+        return std::find(std::begin(options), std::end(options), option) != std::end(options);
+    }
 
+    std::string GetInputFilename(DayId day, PuzzleInputType dataSrc);
+    void PrintSolution(PuzzleSection section, AdventDay::PuzzleFunc doFunc, const std::string& filename);
 }
 
 //------------------------------------------------------------------------------
 // AdventCalender definition
 
 //------------------------------------------------------------------------------
-AdventCalendar::AdventCalendar()
+AdventCalendar::AdventCalendar() 
+    :mDays{
+            {1, {&DayOne::DoPartOne, &DayOne::DoPartTwo} },
+            {2, {&DayTwo::DoPartOne, &DayTwo::DoPartTwo} }
+          }
 {
-
 }
 
 //------------------------------------------------------------------------------
 void AdventCalendar::DoToday()
 {
-    DoDay(2, SectionFlags::PartOne, DataTypeFlags::ExampleData);
+    DoDay(2, { PuzzleSection::PartOne, PuzzleSection::PartTwo }, PuzzleInputType::RealData);
 }
 
 //------------------------------------------------------------------------------
-void AdventCalendar::DoDay(DayId /*day*/, SectionFlags /*sections*/, DataTypeFlags /*dataSrc*/)
+void AdventCalendar::DoDay(DayId day, std::initializer_list<PuzzleSection> sections, PuzzleInputType dataSrc)
 {
-    
+
+    const auto findIter = mDays.find(day);
+
+    if (findIter == mDays.end())
+    {
+        std::cout << "Can't find day: " << day << std::endl;
+        return;
+    }
+
+    const AdventDay& adventDay = findIter->second;
+
+    const std::string fileName = GetInputFilename(day, dataSrc);
+
+    std::cout << "=========================================================================" << std::endl;
+    std::cout << "Day " << day << std::endl;
+
+    if (HasOption(sections, PuzzleSection::PartOne))
+    {
+        PrintSolution(PuzzleSection::PartOne, adventDay.mDayOne, fileName);
+    }  
+
+    if (HasOption(sections, PuzzleSection::PartTwo))
+    {
+        PrintSolution(PuzzleSection::PartTwo, adventDay.mDayTwo, fileName);
+    }
 }
 
 //------------------------------------------------------------------------------
-void AdventCalendar::DoEveryDay(SectionFlags sections, DataTypeFlags dataSrc)
+void AdventCalendar::DoEveryDay(std::initializer_list<PuzzleSection> sections, PuzzleInputType dataSrc)
 {
-    for (DayId day = 0; day < mDays.size(); ++day)
+    for (const auto& [day, adventDay] : mDays)
     {
         DoDay(day, sections, dataSrc);
     }
@@ -42,5 +83,39 @@ void AdventCalendar::DoEveryDay(SectionFlags sections, DataTypeFlags dataSrc)
 // local definitions
 namespace
 {
+    std::ostream& operator<< (std::ostream& out, PuzzleInputType dataSrc)
+    {
+        switch (dataSrc)
+        {
+        case PuzzleInputType::ExampleData:
+            out << "Example"; 
+            break;
 
+        case PuzzleInputType::RealData: 
+            out << "Input"; 
+            break;
+        }
+        return out;
+    }
+
+    //------------------------------------------------------------------------------
+    std::string GetInputFilename(DayId day, PuzzleInputType dataSrc)
+    {
+        std::stringstream fileName;
+        fileName << "Day" << day << dataSrc << ".txt";
+        return fileName.str();
+    }
+
+    //------------------------------------------------------------------------------
+    void PrintSolution(PuzzleSection section, AdventDay::PuzzleFunc doFunc, const std::string& filename)
+    {
+        std::cout << "Part: " << static_cast<std::underlying_type<PuzzleSection>::type>(section) << std::endl;
+        const auto start = std::chrono::high_resolution_clock::now();
+        doFunc(filename);
+        const auto stop = std::chrono::high_resolution_clock::now();
+        const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+  
+        std::cout << std::endl << "Solved in " << durationMs.count() << " ms." << std::endl;
+        std::cout << "------------------------------------------------------------------------------" << std::endl;
+    }
 }
