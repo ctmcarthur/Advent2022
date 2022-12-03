@@ -1,6 +1,7 @@
 #pragma once
 
 // system
+#include <any>
 #include <cstdint>
 #include <functional>
 #include <string>
@@ -26,7 +27,7 @@ using DayId = uint32_t;
 class AdventDay
 {
 public:
-    using PuzzleFunc = std::function<void(const std::string&)>;
+    using PuzzleFunc = std::function<std::any(const std::string&)>;
 
     PuzzleFunc mDayOne;
     PuzzleFunc mDayTwo;

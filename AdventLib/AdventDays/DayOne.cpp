@@ -4,6 +4,7 @@
 #include <Utilities/Input.h>
 
 // System
+#include <any>
 #include <numeric>
 #include <algorithm>
 #include <assert.h>
@@ -107,7 +108,7 @@ namespace DayOne
     }
 
 
-    void DoPartOne(const std::string& filename)
+    std::any DoPartOne(const std::string& filename)
     {
         auto fileLines = Utilities::ReadAllLinesInFile(filename);
         std::vector<uint32_t> calories; 
@@ -119,6 +120,8 @@ namespace DayOne
         {
             (void)line;
         }
+
+        return 0;
     }
-    void DoPartTwo(const std::string& /*filename*/) {}
+    std::any DoPartTwo(const std::string& /*filename*/) { return 0; }
 }

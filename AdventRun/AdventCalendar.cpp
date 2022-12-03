@@ -101,20 +101,27 @@ namespace
     //------------------------------------------------------------------------------
     std::string GetInputFilename(DayId day, PuzzleInputType dataSrc)
     {
+        constexpr char kFileNamePrefix[] = R"(..\Data\Day)";
+        constexpr char kFileExtension[] = R"(.txt)";
+
         std::stringstream fileName;
-        fileName << "Day" << day << dataSrc << ".txt";
+        fileName << kFileNamePrefix << day << dataSrc << kFileExtension;
         return fileName.str();
     }
 
     //------------------------------------------------------------------------------
     void PrintSolution(PuzzleSection section, AdventDay::PuzzleFunc doFunc, const std::string& filename)
     {
+        // Part 1
         std::cout << "Part: " << static_cast<std::underlying_type<PuzzleSection>::type>(section) << std::endl;
         const auto start = std::chrono::high_resolution_clock::now();
+       
+        // print solution
         doFunc(filename);
         const auto stop = std::chrono::high_resolution_clock::now();
         const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-  
+        
+        // Solved in XXms
         std::cout << std::endl << "Solved in " << durationMs.count() << " ms." << std::endl;
         std::cout << "------------------------------------------------------------------------------" << std::endl;
     }

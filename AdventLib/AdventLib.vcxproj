@@ -167,7 +167,6 @@
   <ItemGroup>
     <ClCompile Include="AdventLib.cpp" />
     <ClCompile Include="DayOne.cpp" />
-    <ClCompile Include="DayTwo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

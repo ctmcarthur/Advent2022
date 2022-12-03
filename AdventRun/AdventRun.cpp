@@ -8,12 +8,10 @@
 // AdventLib
 #include <AdventLib.h>
 
-
-
-
 int main() 
 {
     AdventCalendar calendar;
-    calendar.DoToday();
+    calendar.DoToday();    
+
     return 0;
 }
