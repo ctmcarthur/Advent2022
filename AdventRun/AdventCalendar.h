@@ -39,8 +39,11 @@ class AdventCalendar
 public:
     AdventCalendar();
     void DoToday(); 
-    void DoDay(DayId day, std::initializer_list<PuzzleSection> sections, PuzzleInputType dataSrc);
-    void DoEveryDay(std::initializer_list<PuzzleSection> sections, PuzzleInputType dataSrc);
+
+    using PuzzleSectionFlags = std::initializer_list<PuzzleSection>;
+
+    void DoDay(DayId day, PuzzleSectionFlags sections, PuzzleInputType dataSrc);
+    void DoEveryDay(PuzzleSectionFlags sections, PuzzleInputType dataSrc);
 
 private:
     std::map<DayId, AdventDay> mDays;

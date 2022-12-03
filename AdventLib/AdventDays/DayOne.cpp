@@ -1,127 +1,75 @@
 #include "pch.h"
 #include "DayOne.h"
 
-#include <Utilities/Input.h>
+#include <Utilities/StringUtils.h>
 
-// System
-#include <any>
-#include <numeric>
-#include <algorithm>
-#include <assert.h>
-#include <istream>
-#include <iostream>
-#include <string>
-#include <vector>
-
-//------------------------------------------------------------------------------
-namespace
-{
-    //------------------------------------------------------------------------------
-    // Parsing
-   // void ParseLine(std::string& line);
-}
 
 //------------------------------------------------------------------------------
 namespace DayOne
 {
+    //------------------------------------------------------------------------------
+    // Helpers
     
-    void Puzzle::DoPuzzle(std::istream& inData)
-    {
-        std::string line;
-
-        std::vector<int> values;
-
-        mHorde.NewElf();
-
-        while (std::getline(inData, line))
-        {
-            if (!line.empty())
-            {
-                mHorde.AddCalories(stoi(line));
-            }
-            else
-            {
-                mHorde.NewElf();
-            }
-        }
-
-        mHorde.Finish();
-        
-        SolvePuzzle();
-    }
-
-    void Puzzle::SolvePuzzle()
-    {
-        const unsigned int topCount = 3;
-        const unsigned int maxCals = mHorde.GetMaxSum(1);
-        const unsigned int maxThree = mHorde.GetMaxSum(topCount);
-
-        std::cout << "Max Calories: " << maxCals << std::endl;
-        std::cout << "Sum 3 Calories: " << maxThree << std::endl;
-    }
+    // sum of calories for each elf.
+    using CalorieCount = std::vector<uint32_t>;
 
     //------------------------------------------------------------------------------
-    // Elf
-    bool operator<(const Elf& lhs, const Elf& rhs) 
-    { 
-        return lhs.GetCalories() > rhs.GetCalories(); 
-    }
-
-    unsigned int ElfSum(unsigned int lhs, const Elf& rhs)
+    unsigned int GetMaxSum(CalorieCount& calories, uint32_t count)
     {
-        return lhs + rhs.GetCalories();
-    }
-
-
-    //------------------------------------------------------------------------------
-    // Horde
-    
-    Horde::Horde()
-    {
-        mElfs.emplace_back();
-    }
-
-    void Horde::AddCalories(unsigned int cals)
-    {
-        assert(!mElfs.empty());
-        mElfs.back().AddCalories(cals);
-    }
-
-    void Horde::NewElf()
-    {
-        mElfs.emplace_back();
-    }
-
-    void Horde::Finish()
-    {
-        std::sort(mElfs.begin(), mElfs.end());
-        mSorted = true;
-    }
-
-    unsigned int Horde::GetMaxSum(unsigned int count) const
-    {
-        assert(count <= mElfs.size());
-        assert(mSorted);
-
-        const unsigned int calSum = std::accumulate(mElfs.begin(), mElfs.begin() + count, 0, ElfSum);
+        std::partial_sort(calories.begin(), calories.begin()+count, calories.end(), std::greater<uint32_t>());
+        const uint32_t calSum =
+            std::accumulate(calories.begin(), calories.begin() + count, 0);
         return calSum;
     }
 
-
-    std::any DoPartOne(const std::string& filename)
+    //------------------------------------------------------------------------------
+    CalorieCount ParseCalories(const std::string& filename)
     {
-        auto fileLines = Utilities::ReadAllLinesInFile(filename);
-        std::vector<uint32_t> calories; 
-        
+        const auto fileLines = Utilities::ReadAllLinesInFile(filename);
+        CalorieCount calories;
+
         calories.push_back(0);
         auto currentElf = calories.end() - 1;
 
         for (const auto& line : fileLines)
         {
-            (void)line;
+            if (line.empty())
+            {
+                calories.push_back(0);
+            }
+            else
+            {
+                calories.back() += std::stoi(line);
+            }
         }
 
-        return 0;
+        return calories;
     }
-    std::any DoPartTwo(const std::string& /*filename*/) { return 0; }
+
+    //------------------------------------------------------------------------------
+    // Part 1
+    std::any DoPartOne(const std::string& filename)
+    {        
+        CalorieCount calories = ParseCalories(filename);
+        const uint32_t maxCals = GetMaxSum(calories, 1);
+        
+        std::cout << "Elf With the Most Calories: " << maxCals << std::endl;
+       
+        return maxCals;
+    }
+
+    //------------------------------------------------------------------------------
+    // Part 2
+    std::any DoPartTwo(const std::string& filename) 
+    { 
+        CalorieCount calories = ParseCalories(filename);
+
+        constexpr uint32_t topCount = 3;
+        const uint32_t maxThree = GetMaxSum(calories, topCount);
+
+        std::cout << "Calories carried by Top " << topCount << " elves: " 
+            << maxThree << std::endl;
+
+        return maxThree;
+    }
 }

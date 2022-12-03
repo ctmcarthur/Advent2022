@@ -1,13 +1,6 @@
 #include "pch.h"
 
-#include <Utilities/Input.h>
-
-// system
-#include <any>
-#include <array>
-#include <iostream>
-#include <unordered_map>
-
+#include <Utilities/StringUtils.h>
 
 namespace DayTwo
 {
@@ -116,8 +109,6 @@ namespace DayTwo
                + kResultPoints.at(static_cast<size_t>(gameResult));
     }
 
- 
-
     //------------------------------------------------------------------------------
     // Part 1
     std::any DoPartOne(const std::string& filename)
@@ -135,7 +126,6 @@ namespace DayTwo
         std::cout << "I scored " << score << " points!" << std::endl;
         return score;
     }
-
 
      //------------------------------------------------------------------------------
     // Part 2

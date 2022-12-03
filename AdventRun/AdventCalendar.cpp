@@ -4,6 +4,8 @@
 #include <AdventLib.h>
 
 // System
+#include <array>
+#include <cassert>
 #include <chrono>
 #include <iostream>
 #include <sstream>
@@ -37,11 +39,15 @@ AdventCalendar::AdventCalendar()
 //------------------------------------------------------------------------------
 void AdventCalendar::DoToday()
 {
-    DoDay(2, { PuzzleSection::PartOne, PuzzleSection::PartTwo }, PuzzleInputType::RealData);
+    assert(!mDays.empty());
+
+    const DayId today = 1;// (mDays.end()--)->first;
+
+    DoDay(today, { PuzzleSection::PartOne, PuzzleSection::PartTwo }, PuzzleInputType::RealData);
 }
 
 //------------------------------------------------------------------------------
-void AdventCalendar::DoDay(DayId day, std::initializer_list<PuzzleSection> sections, PuzzleInputType dataSrc)
+void AdventCalendar::DoDay(DayId day, PuzzleSectionFlags sections, PuzzleInputType dataSrc)
 {
 
     const auto findIter = mDays.find(day);
@@ -58,6 +64,8 @@ void AdventCalendar::DoDay(DayId day, std::initializer_list<PuzzleSection> secti
 
     std::cout << "=========================================================================" << std::endl;
     std::cout << "Day " << day << std::endl;
+    std::cout << "=========================================================================" << std::endl;
+
 
     if (HasOption(sections, PuzzleSection::PartOne))
     {
@@ -71,7 +79,7 @@ void AdventCalendar::DoDay(DayId day, std::initializer_list<PuzzleSection> secti
 }
 
 //------------------------------------------------------------------------------
-void AdventCalendar::DoEveryDay(std::initializer_list<PuzzleSection> sections, PuzzleInputType dataSrc)
+void AdventCalendar::DoEveryDay(PuzzleSectionFlags sections, PuzzleInputType dataSrc)
 {
     for (const auto& [day, adventDay] : mDays)
     {
@@ -101,8 +109,8 @@ namespace
     //------------------------------------------------------------------------------
     std::string GetInputFilename(DayId day, PuzzleInputType dataSrc)
     {
-        constexpr char kFileNamePrefix[] = R"(..\Data\Day)";
-        constexpr char kFileExtension[] = R"(.txt)";
+        const constexpr char* kFileNamePrefix = { R"(..\Data\Day)" };
+        const constexpr char* kFileExtension = {R"(.txt)"};
 
         std::stringstream fileName;
         fileName << kFileNamePrefix << day << dataSrc << kFileExtension;
