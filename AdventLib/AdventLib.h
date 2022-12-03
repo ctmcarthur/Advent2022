@@ -16,3 +16,10 @@ namespace DayTwo
     std::any DoPartOne(const std::string& filename);
     std::any DoPartTwo(const std::string& filename);
 }
+
+namespace DayThree
+{
+    std::any DoPartOne(const std::string& filename);
+    std::any DoPartTwo(const std::string& filename);
+}
+

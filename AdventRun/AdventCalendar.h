@@ -45,6 +45,8 @@ public:
     void DoDay(DayId day, PuzzleSectionFlags sections, PuzzleInputType dataSrc);
     void DoEveryDay(PuzzleSectionFlags sections, PuzzleInputType dataSrc);
 
+    std::any GetAnswer(DayId day, PuzzleSection section, PuzzleInputType dataSrc) const;
+
 private:
     std::map<DayId, AdventDay> mDays;
 };

@@ -1,17 +1,12 @@
 #pragma once
-// stolen without permission from MarcusReid: 
-// https://github.com/RiotNu/advent-of-code-2022/blob/main/AdventOfCode/Utilities/Input.h
 
 namespace Utilities
 {
-    std::vector<std::string> ReadAllLinesInFile(const std::filesystem::path& path);
-    std::vector<std::string> SplitString(const std::string& input, const std::string& delimiter);
-
+    [[nodiscard]] std::vector<std::string> ReadAllLinesInFile(const std::filesystem::path& path);
   
     // Parses the input string into tokens separated by the provided delimiter and applies the supplied
-    // transform to each token.
     template<typename T>
-    std::vector<T> SplitStringAndTransform(
+    [[nodiscard]] std::vector<T> SplitStringAndTransform(
         const std::string& input,
         const std::string& delimiter,
         std::function<T(const std::string&)> transform)
@@ -25,4 +20,23 @@ namespace Utilities
 
         return ret;
     }
+
+    template<typename T>
+    [[nodiscard]] std::vector<T> SplitString(const std::string& input, const std::string& delimiter)
+    {
+        return Utilities::SplitStringAndTransform<T>(
+            input,
+            delimiter,
+            [](const T& token) { return std::string(token); });
+    }
+
+    template<>
+    [[nodiscard]] std::vector<std::string> SplitString(const std::string& input, const std::string& delimiter);
+
+    template<>
+    [[nodiscard]] std::vector<int32_t> SplitString(const std::string& input, const std::string& delimiter);
+
+    template<>
+    [[nodiscard]] std::vector<int64_t> SplitString(const std::string& input, const std::string& delimiter);
+
 }

@@ -31,7 +31,8 @@ namespace
 AdventCalendar::AdventCalendar() 
     :mDays{
             {1, {&DayOne::DoPartOne, &DayOne::DoPartTwo} },
-            {2, {&DayTwo::DoPartOne, &DayTwo::DoPartTwo} }
+            {2, {&DayTwo::DoPartOne, &DayTwo::DoPartTwo} },
+            {3, {&DayThree::DoPartOne, &DayThree::DoPartTwo} }
           }
 {
 }
@@ -40,10 +41,12 @@ AdventCalendar::AdventCalendar()
 void AdventCalendar::DoToday()
 {
     assert(!mDays.empty());
+   
+    const DayId today = (mDays.end()--)->first;
+    const PuzzleInputType dataSrc = PuzzleInputType::ExampleData;
+    const PuzzleSectionFlags sections = { PuzzleSection::PartOne, PuzzleSection::PartTwo };
 
-    const DayId today = 1;// (mDays.end()--)->first;
-
-    DoDay(today, { PuzzleSection::PartOne, PuzzleSection::PartTwo }, PuzzleInputType::RealData);
+    DoDay(today, sections, dataSrc);
 }
 
 //------------------------------------------------------------------------------
@@ -76,6 +79,25 @@ void AdventCalendar::DoDay(DayId day, PuzzleSectionFlags sections, PuzzleInputTy
     {
         PrintSolution(PuzzleSection::PartTwo, adventDay.mDayTwo, fileName);
     }
+}
+
+std::any AdventCalendar::GetAnswer(DayId day, PuzzleSection section, PuzzleInputType dataSrc) const
+{
+    const auto findIter = mDays.find(day);
+
+    if (findIter == mDays.end())
+    {
+        std::cout << "Can't find day: " << day << std::endl;
+        return std::any();
+    }
+
+    const AdventDay& adventDay = findIter->second;
+    const std::string fileName = GetInputFilename(day, dataSrc);
+
+    const AdventDay::PuzzleFunc doFunc = section == PuzzleSection::PartOne ?
+        adventDay.mDayOne : adventDay.mDayTwo;
+
+    return doFunc(fileName);
 }
 
 //------------------------------------------------------------------------------
