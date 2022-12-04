@@ -1,5 +1,8 @@
 #include "pch.h"
 
+// AdventLib
+#include <Utilities/StringUtils.h>
+
 namespace DayTwo
 {
     //------------------------------------------------------------------------------

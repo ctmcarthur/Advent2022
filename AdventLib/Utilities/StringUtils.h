@@ -3,7 +3,7 @@
 namespace Utilities
 {
     [[nodiscard]] std::vector<std::string> ReadAllLinesInFile(const std::filesystem::path& path);
-  /*
+  
     // Parses the input string into tokens separated by the provided delimiter and applies the supplied
     template<typename T>
     [[nodiscard]] std::vector<T> SplitStringAndTransform(
@@ -38,6 +38,9 @@ namespace Utilities
 
     template<>
     [[nodiscard]] std::vector<int64_t> SplitString(const std::string& input, const std::string& delimiter);
-*/
+
+    template<>
+    [[nodiscard]] std::vector<uint32_t> SplitString(const std::string& input, const std::string& delimiter);
+
 
 }

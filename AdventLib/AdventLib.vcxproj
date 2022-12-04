@@ -74,13 +74,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument</ClangTidyChecks>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument,-modernize-use-trailing-return-type</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument</ClangTidyChecks>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument,-modernize-use-trailing-return-type</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\CppLibs.h" />
     <ClInclude Include="AdventDays\DayOne.h" />
     <ClInclude Include="AdventLib.h" />
     <ClInclude Include="pch.h" />

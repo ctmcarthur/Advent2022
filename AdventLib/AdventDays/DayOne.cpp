@@ -16,9 +16,9 @@ namespace DayOne
     //------------------------------------------------------------------------------
     unsigned int GetMaxSum(CalorieCount& calories, uint32_t count)
     {
-        std::partial_sort(calories.begin(), calories.begin()+count, calories.end(), std::greater<uint32_t>());
+        std::partial_sort(calories.begin(), calories.begin()+count, calories.end(), std::greater<>());
         const uint32_t calSum =
-            std::accumulate(calories.begin(), calories.begin() + count, 0);
+            std::accumulate(calories.begin(), calories.begin() + count, 0U);
         return calSum;
     }
 

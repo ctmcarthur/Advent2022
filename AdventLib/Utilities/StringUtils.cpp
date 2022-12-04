@@ -26,7 +26,7 @@ namespace Utilities
 
         return retLines;
     }
-    /*
+    
 
     template<>
     std::vector<std::string> SplitString(const std::string& input, const std::string& delimiter)
@@ -47,11 +47,20 @@ namespace Utilities
     }
 
     template<>
+    std::vector<uint32_t> SplitString(const std::string& input, const std::string& delimiter)
+    {
+        return SplitStringAndTransform<uint32_t>(
+            input,
+            delimiter,
+            [](const std::string& token) { return std::stoi(token); });
+    }
+
+    template<>
     std::vector<int64_t> SplitString(const std::string& input, const std::string& delimiter)
     {
         return SplitStringAndTransform<int64_t>(
             input,
             delimiter,
             [](const std::string& token) { return std::stoll(token); });
-    }*/
+    }
 }
