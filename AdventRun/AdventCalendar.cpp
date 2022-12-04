@@ -42,11 +42,13 @@ void AdventCalendar::DoToday()
 {
     assert(!mDays.empty());
    
-    const DayId today = (mDays.end()--)->first;
-    const PuzzleInputType dataSrc = PuzzleInputType::ExampleData;
+    const DayId today = std::prev(mDays.end())->first;;
+
+   // const PuzzleInputType dataSrc = PuzzleInputType::ExampleData;
     const PuzzleSectionFlags sections = { PuzzleSection::PartOne, PuzzleSection::PartTwo };
 
-    DoDay(today, sections, dataSrc);
+    DoDay(today, sections, PuzzleInputType::ExampleData);
+    DoDay(today, sections, PuzzleInputType::RealData);
 }
 
 //------------------------------------------------------------------------------
@@ -131,8 +133,8 @@ namespace
     //------------------------------------------------------------------------------
     std::string GetInputFilename(DayId day, PuzzleInputType dataSrc)
     {
-        const constexpr char* kFileNamePrefix = { R"(..\Data\Day)" };
-        const constexpr char* kFileExtension = {R"(.txt)"};
+        constexpr std::string_view kFileNamePrefix = { R"(..\Data\Day)" };
+        constexpr std::string_view kFileExtension = {R"(.txt)"};
 
         std::stringstream fileName;
         fileName << kFileNamePrefix << day << dataSrc << kFileExtension;
