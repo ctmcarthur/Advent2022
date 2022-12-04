@@ -5,41 +5,41 @@
 
 
 // __cplusplus >= 201103L
-#include <cinttypes>
+/*#include <cinttypes>*/
 #include <cstdint>
 
 // C++
 #include <algorithm>
-#include <bitset>
-#include <deque>
+// #include <bitset>
+// #include <deque>
 #include <fstream>
 #include <functional>
-#include <iomanip>
+// #include <iomanip>
 #include <iostream>
-#include <istream>
-#include <iterator>
-#include <limits>
-#include <list>
+// #include <istream>
+// #include <iterator>
+// #include <limits>
+// #include <list>
 #include <map>
 #include <numeric>
-#include <queue>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <streambuf>
-#include <string>
+// #include <queue>
+// #include <set>
+// #include <sstream>
+// #include <stack>
+// #include <streambuf>
+// #include <string>
 #include <vector>
 
 // __cplusplus >= 201103L
 #include <array>
 #include <chrono>
 #include <initializer_list>
-#include <regex>
-#include <tuple>
-#include <typeindex>
+// #include <regex>
+// #include <tuple>
+// #include <typeindex>
 #include <type_traits>
 #include <unordered_map>
-#include <unordered_set>
+// #include <unordered_set>
 
 // __cplusplus >= 201402L
 
@@ -51,6 +51,6 @@
 #include <variant>
 
 // __cplusplus >= 202002L
-#include <concepts>
-#include <ranges>
-#include <span>
+// #include <concepts>
+// #include <ranges>
+// #include <span>

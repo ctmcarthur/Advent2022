@@ -32,7 +32,8 @@ AdventCalendar::AdventCalendar()
     :mDays{
             {1, {&DayOne::DoPartOne, &DayOne::DoPartTwo} },
             {2, {&DayTwo::DoPartOne, &DayTwo::DoPartTwo} },
-            {3, {&DayThree::DoPartOne, &DayThree::DoPartTwo} }
+            {3, {&DayThree::DoPartOne, &DayThree::DoPartTwo} },
+            {4, {&DayFour::DoPartOne, &DayFour::DoPartTwo} }
           }
 {
 }

@@ -26,6 +26,7 @@ namespace Utilities
 
         return retLines;
     }
+    /*
 
     template<>
     std::vector<std::string> SplitString(const std::string& input, const std::string& delimiter)
@@ -52,5 +53,5 @@ namespace Utilities
             input,
             delimiter,
             [](const std::string& token) { return std::stoll(token); });
-    }
+    }*/
 }

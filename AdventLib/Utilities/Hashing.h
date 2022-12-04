@@ -1,6 +1,7 @@
 #pragma once
 // stolen without permission from MarcusReid: 
 // https://github.com/RiotNu/advent-of-code-2022/blob/main/AdventOfCode/Utilities/Input.h
+/*
 
 namespace Utilities
 {
@@ -53,4 +54,4 @@ namespace Utilities
 				return result;\
 			}\
 		};\
-	}
+	}*/

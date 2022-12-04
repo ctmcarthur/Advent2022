@@ -1,7 +1,5 @@
 #include "pch.h"
 
-#include <Utilities/StringUtils.h>
-
 namespace DayTwo
 {
     //------------------------------------------------------------------------------
