@@ -9,9 +9,9 @@ namespace DayFive
     //------------------------------------------------------------------------------
     // SupplyStacksBlueprint
 
+
     void SupplyStacksBlueprint::AddBottomCrate(size_t stackIdx, char boxLabel)
     {
-        assert(stackIdx < 10);
         if (mStacks.size() <= stackIdx)
         {
             mStacks.resize(stackIdx + 1);
@@ -20,23 +20,42 @@ namespace DayFive
         mStacks.at(stackIdx).push_back(boxLabel);
     }
 
-    void ValidateInstructions(const CrateInstruction& instructions, const std::vector<BoxStack> & stacks)
+    
+    //------------------------------------------------------------------------------
+    void SupplyStacksBlueprint::ExecuteCraneInstruction(const CraneInstruction& instructions, CraneVersion craneType)
     {
-        assert(instructions.source < stacks.size());
-        assert(instructions.dest < stacks.size());
-        assert(instructions.count > 0);
+        switch (craneType)
+        {
+        case CraneVersion::CRANE_9000:
+            MoveCrates(instructions);
+            break;
+        case CraneVersion::CRANE_9001:
+            MoveCratesAsStack(instructions);
+            break;
+        }
     }
 
     //------------------------------------------------------------------------------
-    void SupplyStacksBlueprint::MoveCrates(const CrateInstruction& instructions)
+    std::pair<SupplyStacksBlueprint::BoxStack&, SupplyStacksBlueprint::BoxStack&> SupplyStacksBlueprint::GetSrcDst(
+        const CraneInstruction& instructions)
     {
-        ValidateInstructions(instructions, mStacks);
+        assert(instructions.source < mStacks.size());
+        assert(instructions.dest < mStacks.size());
 
-        BoxStack& src = mStacks[instructions.source];
-        BoxStack& dst = mStacks[instructions.dest];
-        
+        BoxStack& src = mStacks.at(instructions.source);
+        BoxStack& dst = mStacks.at(instructions.dest);
+
         assert(instructions.count <= src.size());
+        assert(instructions.count != 0);
 
+        return { src, dst };
+    }
+
+    //------------------------------------------------------------------------------
+    void SupplyStacksBlueprint::MoveCrates(const CraneInstruction& instructions)
+    {
+        
+        auto [src, dst] = GetSrcDst(instructions);
         for (uint32_t i = 0; i < instructions.count; ++i)
         {
             dst.push_front(src.front());
@@ -45,14 +64,9 @@ namespace DayFive
     }
 
     //------------------------------------------------------------------------------
-    void SupplyStacksBlueprint::MoveCratesAsStack(const CrateInstruction& instructions)
+    void SupplyStacksBlueprint::MoveCratesAsStack(const CraneInstruction& instructions)
     {
-        ValidateInstructions(instructions, mStacks);
-
-        BoxStack& src = mStacks[instructions.source];
-        BoxStack& dst = mStacks[instructions.dest];
-
-        assert(instructions.count <= src.size());
+        auto [src, dst] = GetSrcDst(instructions);
 
         std::stack<char> moveStack;
 
@@ -70,12 +84,11 @@ namespace DayFive
     }
 
     //------------------------------------------------------------------------------
-    std::string GetTopRow(const SupplyStacksBlueprint& blueprint)
+    std::string SupplyStacksBlueprint::GetTopRow() const
     {
         std::string ret;
-        const auto& stacks = blueprint.GetStacks();
         
-        for (const auto& crateStack : stacks)
+        for (const auto& crateStack : mStacks)
         {
             if (!crateStack.empty()) 
             {
@@ -109,7 +122,7 @@ namespace DayFive
     }
 
     //------------------------------------------------------------------------------
-    void ParseMove(const std::string& input, CrateInstruction &outInstructions)
+    void ParseMove(const std::string& input, CraneInstruction &outInstructions)
     {
         constexpr size_t countIdx = 5;
         const size_t srcIdx = input.find('m', countIdx) + 2;
@@ -120,18 +133,12 @@ namespace DayFive
         outInstructions.dest = static_cast<size_t>(std::stoi(std::string{ input.at(dstIdx) })) - 1;
     }
 
-    //------------------------------------------------------------------------------
-    // Part One
-   
-
-    //------------------------------------------------------------------------------
-    // Do Part One
-    std::any DoPartOne(const std::string& filename)
+    std::string ParseAndExecute(const std::string& filename, CraneVersion craneVersion)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
-        
+        const auto input = StringUtils::SplitFile(filename);
+
         SupplyStacksBlueprint blueprint;
-        
+
         for (const auto& line : input)
         {
             for (const char command : line)
@@ -143,15 +150,26 @@ namespace DayFive
                 }
                 if (command == kParseMove)
                 {
-                    CrateInstruction instructions;
+                    CraneInstruction instructions;
                     ParseMove(line, instructions);
-                    blueprint.MoveCrates(instructions);
+                    blueprint.ExecuteCraneInstruction(instructions, craneVersion);
                     break;
                 }
             }
         }
 
-        std::string topRow = GetTopRow(blueprint);
+        return blueprint.GetTopRow();
+    }
+
+    //------------------------------------------------------------------------------
+    // Part One
+   
+
+    //------------------------------------------------------------------------------
+    // Do Part One
+    std::any DoPartOne(const std::string& filename)
+    {
+        std::string topRow = ParseAndExecute(filename, CraneVersion::CRANE_9000);
 
         std::cout << "Top Row of Crates are labeled: " << topRow << std::endl;
 
@@ -168,30 +186,9 @@ namespace DayFive
     //------------------------------------------------------------------------------
     std::any DoPartTwo(const std::string& filename)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
 
-        SupplyStacksBlueprint blueprint;
+        std::string topRow = ParseAndExecute(filename, CraneVersion::CRANE_9001);
 
-        for (const auto& line : input)
-        {
-            for (const char command : line)
-            {
-                if (command == kParseCrate)
-                {
-                    ParseCrate(line, blueprint);
-                    break;
-                }
-                if (command == kParseMove)
-                {
-                    CrateInstruction instructions;
-                    ParseMove(line, instructions);
-                    blueprint.MoveCratesAsStack(instructions);
-                    break;
-                }
-            }
-        }
-
-        std::string topRow = GetTopRow(blueprint);
 
         std::cout << "The Crane 9001 Stacked Crates are labeled: " << topRow << std::endl;
 

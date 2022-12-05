@@ -27,7 +27,7 @@ TEST(DayFive, TestBoxLoading)
     using namespace DayFive;
     SupplyStacksBlueprint blueprint;
     FillExampleData(blueprint);
-    EXPECT_EQ(GetTopRow(blueprint), "NDP");
+    EXPECT_EQ(blueprint.GetTopRow(), "NDP");
 }
 
 TEST(DayFive, PartOneBoxMoving)
@@ -35,25 +35,26 @@ TEST(DayFive, PartOneBoxMoving)
     using namespace DayFive;
     SupplyStacksBlueprint blueprint;
     FillExampleData(blueprint);
+    const auto craneVersion = CraneVersion::CRANE_9000;
 
     {
-        blueprint.MoveCrates({ 1,1,0 });
-        EXPECT_EQ(GetTopRow(blueprint), "DCP");
+        blueprint.ExecuteCraneInstruction({ 1,1,0 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "DCP");
     }
 
     {
-        blueprint.MoveCrates({ 3,0,2 });
-        EXPECT_EQ(GetTopRow(blueprint), "CZ");
+        blueprint.ExecuteCraneInstruction({ 3,0,2 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "CZ");
     }
 
     {
-        blueprint.MoveCrates({ 2,1,0 });
-        EXPECT_EQ(GetTopRow(blueprint), "MZ");
+        blueprint.ExecuteCraneInstruction({ 2,1,0 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "MZ");
     }
 
     {
-        blueprint.MoveCrates({ 1,0,1 });
-        EXPECT_EQ(GetTopRow(blueprint), "CMZ");
+        blueprint.ExecuteCraneInstruction({ 1,0,1 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "CMZ");
     }
 }
 
@@ -63,24 +64,26 @@ TEST(DayFive, PartTwoBoxMoving)
     SupplyStacksBlueprint blueprint;
     FillExampleData(blueprint);
 
+    const auto craneVersion = CraneVersion::CRANE_9001;
+
     {
-        blueprint.MoveCratesAsStack({ 1,1,0 });
-        EXPECT_EQ(GetTopRow(blueprint), "DCP");
+        blueprint.ExecuteCraneInstruction({ 1,1,0 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "DCP");
     }
 
     {
-        blueprint.MoveCratesAsStack({ 3,0,2 });
-        EXPECT_EQ(GetTopRow(blueprint), "CD");
+        blueprint.ExecuteCraneInstruction({ 3,0,2 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "CD");
     }
 
     {
-        blueprint.MoveCratesAsStack({ 2,1,0 });
-        EXPECT_EQ(GetTopRow(blueprint), "CD");
+        blueprint.ExecuteCraneInstruction({ 2,1,0 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "CD");
     }
 
     {
-        blueprint.MoveCratesAsStack({ 1,0,1 });
-        EXPECT_EQ(GetTopRow(blueprint), "MCD");
+        blueprint.ExecuteCraneInstruction({ 1,0,1 }, craneVersion);
+        EXPECT_EQ(blueprint.GetTopRow(), "MCD");
     }
 }
 

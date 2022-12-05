@@ -114,7 +114,7 @@ namespace DayTwo
     // Part 1
     std::any DoPartOne(const std::string& filename)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
+        const auto input = StringUtils::SplitFile(filename);
         uint32_t score = 0;
         for (const auto& line : input)
         {
@@ -167,7 +167,7 @@ namespace DayTwo
     //------------------------------------------------------------------------------
     std::any DoPartTwo(const std::string& filename)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
+        const auto input = StringUtils::SplitFile(filename);
         uint32_t score = 0;
         for (const auto& line : input)
         {

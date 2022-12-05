@@ -79,7 +79,7 @@ namespace DayThree
     // Part One
     std::any DoPartOne(const std::string& filename)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
+        const auto input = StringUtils::SplitFile(filename);
         uint32_t prioritySum = 0;
         for (const auto& rucksack : input)
         {
@@ -114,7 +114,7 @@ namespace DayThree
     {
         constexpr uint32_t kElfGroupSize = 3;
   
-        const auto input = Utilities::ReadAllLinesInFile(filename);
+        const auto input = StringUtils::SplitFile(filename);
         uint32_t prioritySum = 0;
         const auto inputSize = input.size();
 

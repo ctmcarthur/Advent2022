@@ -25,7 +25,7 @@ namespace DayOne
     //------------------------------------------------------------------------------
     CalorieCount ParseCalories(const std::string& filename)
     {
-        const auto fileLines = Utilities::ReadAllLinesInFile(filename);
+        const auto fileLines = StringUtils::SplitFile(filename);
         CalorieCount calories;
 
         calories.push_back(0);

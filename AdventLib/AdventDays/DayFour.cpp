@@ -23,7 +23,7 @@ namespace DayFour
     CleanRange ParseRange(const std::string& inputLine)
     {
         static const std::string kIntsDelimeter("-");
-        const auto elfRange = Utilities::SplitString<uint32_t>(inputLine, kIntsDelimeter);
+        const auto elfRange = StringUtils::SplitString<uint32_t>(inputLine, kIntsDelimeter);
         assert(elfRange.size() == 2);
 
         return { elfRange.at(0), elfRange.at(1)};
@@ -33,7 +33,7 @@ namespace DayFour
     {
         static const std::string kPairDelimeter(",");
 
-        const auto elfs = Utilities::SplitString<std::string>(inputLine, kPairDelimeter);
+        const auto elfs = StringUtils::SplitString<std::string>(inputLine, kPairDelimeter);
 
         assert(elfs.size() == 2);
 
@@ -44,7 +44,7 @@ namespace DayFour
     // Do Part One
     std::any DoPartOne(const std::string& filename)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
+        const auto input = StringUtils::SplitFile(filename);
         
         uint32_t superSetCount = 0;
 
@@ -94,7 +94,7 @@ namespace DayFour
     //------------------------------------------------------------------------------
     std::any DoPartTwo(const std::string& filename)
     {
-        const auto input = Utilities::ReadAllLinesInFile(filename);
+        const auto input = StringUtils::SplitFile(filename);
 
         uint32_t superSetCount = 0;
 

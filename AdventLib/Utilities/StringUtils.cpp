@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "StringUtils.h"
 
-namespace Utilities
+namespace StringUtils
 {
-    std::vector<std::string> ReadAllLinesInFile(const std::filesystem::path& path)
+    //------------------------------------------------------------------------------
+    std::vector<std::string> SplitFile(const std::filesystem::path& path)
     {
         std::vector<std::string> retLines;
 
@@ -27,38 +28,42 @@ namespace Utilities
         return retLines;
     }
     
-
+    //------------------------------------------------------------------------------
     template<>
     std::vector<std::string> SplitString(const std::string& input, const std::string& delimiter)
     {
-        return SplitStringAndTransform<std::string>(
+        // do nothing!
+        return SplitTransformString<std::string>(
             input,
             delimiter,
             [](const std::string& token) { return token; }); 
     }
 
+    //------------------------------------------------------------------------------
     template<>
     std::vector<int32_t> SplitString(const std::string& input, const std::string& delimiter)
     {
-        return SplitStringAndTransform<int32_t>(
+        return SplitTransformString<int32_t>(
             input,
             delimiter,
             [](const std::string& token) { return std::stoi(token); });
     }
 
+    //------------------------------------------------------------------------------
     template<>
     std::vector<uint32_t> SplitString(const std::string& input, const std::string& delimiter)
     {
-        return SplitStringAndTransform<uint32_t>(
+        return SplitTransformString<uint32_t>(
             input,
             delimiter,
-            [](const std::string& token) { return std::stoi(token); });
+            [](const std::string& token) { return static_cast<uint32_t>(std::stoi(token)); });
     }
 
+    //------------------------------------------------------------------------------
     template<>
     std::vector<int64_t> SplitString(const std::string& input, const std::string& delimiter)
     {
-        return SplitStringAndTransform<int64_t>(
+        return SplitTransformString<int64_t>(
             input,
             delimiter,
             [](const std::string& token) { return std::stoll(token); });

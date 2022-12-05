@@ -6,9 +6,8 @@
 namespace DayFive
 {
     //------------------------------------------------------------------------------
-    using BoxStack = std::deque<char>; // front is top of stack.
 
-    class CrateInstruction
+    class CraneInstruction
     {
     public:
         uint32_t count = 1;
@@ -16,18 +15,26 @@ namespace DayFive
         size_t dest = 1;
     };
 
+    enum class CraneVersion : uint8_t 
+    {
+        CRANE_9000,
+        CRANE_9001
+    };
+
     class SupplyStacksBlueprint
     {
     public:
         void AddBottomCrate(size_t stackIdx, char boxLabel);
-        void MoveCrates(const CrateInstruction& instructions);
-        void MoveCratesAsStack(const CrateInstruction& instructions);
+        void ExecuteCraneInstruction(const CraneInstruction& instructions, CraneVersion craneType);
 
-        const std::vector<BoxStack>& GetStacks() const { return mStacks; }
+        std::string GetTopRow() const;
 
     private:
-        std::vector<BoxStack> mStacks;
+        void MoveCrates(const CraneInstruction& instructions);
+        void MoveCratesAsStack(const CraneInstruction& instructions);
+    
+        using BoxStack = std::deque<char>;
+        std::pair<BoxStack&, BoxStack&> GetSrcDst(const CraneInstruction& instructions);
+        std::vector<BoxStack> mStacks; // front is top of stack
     };
-
-    std::string GetTopRow(const SupplyStacksBlueprint& blueprint);
 }
