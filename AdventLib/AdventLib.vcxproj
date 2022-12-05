@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\CppLibs.h" />
+    <ClInclude Include="AdventCalendar.h" />
     <ClInclude Include="AdventDays\DayOne.h" />
     <ClInclude Include="AdventLib.h" />
     <ClInclude Include="pch.h" />
@@ -167,6 +168,8 @@
     <ClInclude Include="Utilities\StringUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdventCalendar.cpp" />
+    <ClCompile Include="AdventDays\DayFive.cpp" />
     <ClCompile Include="AdventDays\DayFour.cpp" />
     <ClCompile Include="AdventDays\DayOne.cpp" />
     <ClCompile Include="AdventDays\DayThree.cpp" />

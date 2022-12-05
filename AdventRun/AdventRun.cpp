@@ -1,17 +1,11 @@
-#include <AdventCalendar.h>
-
 // System
-#include <fstream>
-#include <iostream>
-#include <span>
 
 // AdventLib
+#include <AdventCalendar.h>
 #include <AdventLib.h>
 
-int main() 
+int main()
 {
     AdventCalendar calendar;
-    calendar.DoToday();    
-
-    return 0;
+    calendar.DoToday();
 }

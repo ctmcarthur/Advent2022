@@ -145,7 +145,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AdventCalendar.cpp" />
     <ClCompile Include="AdventRun.cpp" />
   </ItemGroup>
   <ItemGroup>

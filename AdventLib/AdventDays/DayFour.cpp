@@ -40,6 +40,8 @@ namespace DayFour
         return { ParseRange(elfs.at(0)), ParseRange(elfs.at(1)) };
     }
 
+    //------------------------------------------------------------------------------
+    // Do Part One
     std::any DoPartOne(const std::string& filename)
     {
         const auto input = Utilities::ReadAllLinesInFile(filename);
@@ -58,7 +60,7 @@ namespace DayFour
 
         std::cout << "There are " << superSetCount << " Supersets!" << std::endl;
 
-        return 0;
+        return superSetCount;
     }
 
 
@@ -107,6 +109,6 @@ namespace DayFour
         }
 
         std::cout << "There are " << superSetCount << " Overlaps!" << std::endl;
-        return 0;
+        return superSetCount;
     }
 }
