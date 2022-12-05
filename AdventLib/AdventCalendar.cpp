@@ -94,7 +94,7 @@ std::any AdventCalendar::GetAnswer(DayId day, PuzzleSection section, PuzzleInput
     if (findIter == mDays.end())
     {
         std::cout << "Can't find day: " << day << std::endl;
-        return std::any();
+        return {};
     }
 
     const AdventDay& adventDay = findIter->second;

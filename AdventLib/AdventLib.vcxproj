@@ -75,12 +75,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument,-modernize-use-trailing-return-type</ClangTidyChecks>
+    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-magic-numbers, -readability-magic-numbers</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument,-modernize-use-trailing-return-type</ClangTidyChecks>
+    <ClangTidyChecks>clang-analyzer-*,cppcoreguidelines-*,readability*, modernize*, bugprone*,-clang-diagnostic-unused-command-line-argument,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-magic-numbers, -readability-magic-numbers</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="..\Common\CppLibs.h" />
     <ClInclude Include="AdventCalendar.h" />
+    <ClInclude Include="AdventDays\DayFive.h" />
     <ClInclude Include="AdventDays\DayOne.h" />
     <ClInclude Include="AdventLib.h" />
     <ClInclude Include="pch.h" />
