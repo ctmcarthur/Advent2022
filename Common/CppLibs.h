@@ -10,7 +10,7 @@
 
 // C++
 #include <algorithm>
-// #include <bitset>
+#include <bitset>
 // #include <deque>
 #include <fstream>
 #include <functional>

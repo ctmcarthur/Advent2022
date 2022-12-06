@@ -34,7 +34,8 @@ AdventCalendar::AdventCalendar()
             {2, {&DayTwo::DoPartOne, &DayTwo::DoPartTwo} },
             {3, {&DayThree::DoPartOne, &DayThree::DoPartTwo} },
             {4, {&DayFour::DoPartOne, &DayFour::DoPartTwo} },
-            {5, {&DayFive::DoPartOne, &DayFive::DoPartTwo} }
+            {5, {&DayFive::DoPartOne, &DayFive::DoPartTwo} },
+            {6, {&DaySix::DoPartOne, &DaySix::DoPartTwo} }
           }
 {
 }

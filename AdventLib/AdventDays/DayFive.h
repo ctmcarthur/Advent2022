@@ -1,4 +1,9 @@
 #pragma once
+#include "pch.h"
+#include "DayFive.h"
+
+// AdventLib
+#include <Utilities/StringUtils.h>
 
 // System
 #include <deque>

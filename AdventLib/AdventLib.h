@@ -35,12 +35,12 @@ namespace DayFive
     std::any DoPartTwo(const std::string& filename);
 }
 
-/*
+
 namespace DaySix
 {
     std::any DoPartOne(const std::string& filename);
     std::any DoPartTwo(const std::string& filename);
-}*/
+}
 
 /*
 namespace DaySeven

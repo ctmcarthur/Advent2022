@@ -54,7 +54,12 @@ namespace
                 {PuzzleInputType::ExampleData, {&CompareAny<std::string>, {std::string("CMZ")}, {std::string("MCD")}}},
                 {PuzzleInputType::RealData, {&CompareAny<std::string>, {std::string("FCVRLMVQP")}, {std::string("RWLWGJGFD")}}}
             }
-        }
+        },
+       /* {6,
+            {
+                {PuzzleInputType::ExampleData, {&CompareAny<std::uint32_t>, {7u}, {}}},
+            }
+        }*/
     };
 
     //------------------------------------------------------------------------------

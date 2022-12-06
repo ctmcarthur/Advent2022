@@ -9,6 +9,9 @@
     <ClCompile Include="TestDayFive.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="TestDaySix.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -17,5 +20,8 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{508ced44-b33f-47c8-b368-6439848cf236}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
