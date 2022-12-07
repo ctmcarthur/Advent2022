@@ -6,8 +6,8 @@ namespace DaySeven
     {
     public:
         File() = default;
-        File(std::string&& fileName, size_t fileSize)
-            : mFileName(std::move(fileName))
+        File(const std::string& fileName, size_t fileSize)
+            : mFileName(fileName)
             , mFileSize(fileSize)
         {
 
@@ -28,21 +28,18 @@ namespace DaySeven
         Directory(Directory&& directory) = default;
         Directory& operator=(Directory&& directory) = default;
 
-        void AddFile(std::string&& fileName, size_t fileSize);
+        void AddFile(const std::string& fileName, size_t fileSize);
         void SizeIncrease(size_t fileSize);
-        void AddDirectory(std::string&& directoryName);
+        void AddDirectory(const std::string& directoryName);
         Directory& ChangeDir(const std::string& changeDir);
 
         size_t GetTotalSize() const { return mTotalSize; }
         const DirectoryList& GetSubDirs() const { return mDirectories; }
 
-
     private:
-
         std::vector<File> mFiles;
         DirectoryList mDirectories;
 
-        // mutable data.
         Directory* mParentDirectory = nullptr;
         size_t mTotalSize = 0;
     };
@@ -52,6 +49,7 @@ namespace DaySeven
     public:
         Directory& ChangeDir(const std::string& changeDir);
         size_t GetSumSize(size_t maxSize) const; 
+        size_t FindFreeSpace(size_t desiredSpace) const;
 
     private:
 
