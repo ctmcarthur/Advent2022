@@ -122,7 +122,7 @@ namespace DaySeven
      {
          Directory* currDir = nullptr;
 
-         auto input = StringUtils::SplitFile(filename);
+         const auto input = StringUtils::SplitFile(filename);
 
          for (const auto& line : input)
          {
