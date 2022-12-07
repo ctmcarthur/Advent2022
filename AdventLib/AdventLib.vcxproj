@@ -163,6 +163,7 @@
     <ClInclude Include="AdventCalendar.h" />
     <ClInclude Include="AdventDays\DayFive.h" />
     <ClInclude Include="AdventDays\DayOne.h" />
+    <ClInclude Include="AdventDays\DaySeven.h" />
     <ClInclude Include="AdventDays\DaySix.h" />
     <ClInclude Include="AdventLib.h" />
     <ClInclude Include="pch.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="AdventDays\DayFive.cpp" />
     <ClCompile Include="AdventDays\DayFour.cpp" />
     <ClCompile Include="AdventDays\DayOne.cpp" />
+    <ClCompile Include="AdventDays\DaySeven.cpp" />
     <ClCompile Include="AdventDays\DaySix.cpp" />
     <ClCompile Include="AdventDays\DayThree.cpp" />
     <ClCompile Include="AdventDays\DayTwo.cpp" />
