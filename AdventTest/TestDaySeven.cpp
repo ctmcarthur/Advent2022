@@ -7,8 +7,6 @@
 //------------------------------------------------------------------------------
 // Test Helpers
 
-namespace
-{}
 
 TEST(DaySeven, TestPartOneExamples) 
 {

@@ -48,6 +48,7 @@ namespace DayThree
                 if (matchesAll)
                 {
                     // found it!
+                    foundItem = item;
                     break;
                 }
             }
@@ -90,14 +91,14 @@ namespace DayThree
             // replace with gsl narrow
             const auto midWayIter =
                 rucksack.begin() + static_cast<std::vector<std::string>::difference_type>(rucksack.size() / 2);
-            const std::string_view leftSack(rucksack.begin().operator->(), midWayIter - rucksack.begin());
-            const std::string_view rightSack(midWayIter.operator->(), rucksack.end() - midWayIter);
+         //   const std::string_view leftSack(rucksack.begin().operator->(), midWayIter - rucksack.begin());
+           // const std::string_view rightSack(midWayIter.operator->(), rucksack.end() - midWayIter);
           
-            /*const auto rucksackSize = rucksack.size() / 2;
+            const auto rucksackSize = rucksack.size() / 2;
 
             const std::string_view leftSack(&rucksack.at(0), rucksackSize);
             const std::string_view rightSack(&rucksack.at(rucksackSize), rucksackSize);
-         */
+         
             const char badlySortedItem = FindMatchingItem({ leftSack, rightSack });
            
             prioritySum += GetPriority(badlySortedItem);
