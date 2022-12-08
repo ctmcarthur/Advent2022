@@ -85,6 +85,12 @@ namespace
                 {PuzzleInputType::RealData, {&CompareAny<size_t>, size_t{1428881}, size_t{10475598}}}
             }
         },
+        {8,
+            {
+                {PuzzleInputType::ExampleData, {&CompareAny<uint32_t>, {21u}, {8u}}},
+                {PuzzleInputType::RealData, {&CompareAny<uint32_t>, {1533u}, {345744u}}}
+            }
+        },
     };
 
     //------------------------------------------------------------------------------
