@@ -4,6 +4,7 @@
 // AdventLib
 #include <Utilities/StringUtils.h>
 
+
 /*
 all trees on outside edge are visible.
 a tree is interior visible if there are only trees shorter than it between it and an edge.
@@ -56,7 +57,7 @@ namespace DayEight
     //------------------------------------------------------------------------------
     uint32_t Forest::CountVisibleTrees() const
     {
-        uint32_t countVisible = static_cast<uint32_t>((mDimensions.first+1) * 2 + ((mDimensions.second-1) * 2)); // grab the edges as visible
+        auto countVisible = static_cast<uint32_t>((mDimensions.first+1) * 2 + ((mDimensions.second-1) * 2)); // grab the edges as visible
 
         assert(mMode == Mode::CalcHeightsOnAdd);
 
@@ -231,15 +232,18 @@ namespace DayEight
         {
             return dir == Direction::Right;
         }
-        else if (pos.first == mDimensions.first) // Check Right Side
+        
+        if (pos.first == mDimensions.first) // Check Right Side
         {
             return dir == Direction::Left;
         }
-        else if (pos.second == 0) // Top Side
+        
+        if (pos.second == 0) // Top Side
         {
             return dir == Direction::Down;
         }
-        else if (pos.second == mDimensions.second) // Bottom Side
+        
+        if (pos.second == mDimensions.second) // Bottom Side
         {
             return dir == Direction::Up;
         }
