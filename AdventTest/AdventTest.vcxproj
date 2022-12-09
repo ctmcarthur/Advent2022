@@ -52,6 +52,7 @@
     <ClCompile Include="TestAll.cpp" />
     <ClCompile Include="TestDayEight.cpp" />
     <ClCompile Include="TestDayFive.cpp" />
+    <ClCompile Include="TestDayNine.cpp" />
     <ClCompile Include="TestDaySeven.cpp" />
     <ClCompile Include="TestDaySix.cpp" />
   </ItemGroup>
