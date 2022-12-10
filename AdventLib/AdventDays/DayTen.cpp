@@ -14,8 +14,7 @@ namespace DayTen
     
 
     //------------------------------------------------------------------------------
-    CRT::CRT() 
-        : mCycles(1,1) // 0th element begins at 1
+    CRT::CRT()
     {
 
     }
@@ -39,6 +38,11 @@ namespace DayTen
     //------------------------------------------------------------------------------
     void CRT::FillToCycle(uint32_t newCycle)
     {
+        if (mCycles.empty())
+        {
+            mCycles.push_back(1);
+        }
+
         const auto fillVal = mCycles.back();
         while (mCycles.size() <= newCycle)
         {
@@ -101,7 +105,7 @@ namespace DayTen
         return signalSum;
     }
 
-    std::any DoPartTwo(const std::string& /*filename*/)
+    std::any DoPartTwo(const std::string& filename)
     {
         CRT crt;
 
@@ -112,6 +116,28 @@ namespace DayTen
             ParseInstruction(line, crt);
         }
 
+        auto crtLines = crt.GetCycles() | std::ranges::views::chunk(40);
+
+        for (auto crtLine : crtLines)
+        {
+            std::cout << std::endl;
+            int32_t drawPos = 0;
+            for (auto pixel : crtLine)
+            {
+                // are we within 1?
+                if (std::abs(pixel - drawPos) <= 1)
+                {
+                    std::cout << "#";
+                }
+                else
+                {
+                    std::cout << ".";
+                }
+
+                ++drawPos;
+            }
+            std::cout << std::endl;
+        }
         return {};
     }
 }
