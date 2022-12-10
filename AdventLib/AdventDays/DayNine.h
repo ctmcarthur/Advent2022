@@ -1,7 +1,7 @@
 #pragma once
 // AdventLib
 #include <Utilities/Grid.h>
-namespace DayNine
+namespace DayNine2022
 {
     class RopeGrid
     {

@@ -12,7 +12,7 @@ namespace
 
 TEST(DaySix, TestPartOneExamples) 
 {
-    using namespace DaySix;
+    using namespace DaySix2022;
     constexpr uint32_t keySize = 4;
     EXPECT_EQ(FindFirstKeyIdx("mjqjpqmgbljsphdztnvjfqwrcgsmlb", keySize), 7ull);
 

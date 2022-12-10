@@ -97,7 +97,7 @@ namespace
     {
         // test Part One.
         {
-            std::cout << "Testing day " << day << " Part One!" << std::endl << "----------------------" << std::endl;
+            std::cout << std::endl << "Testing day " << day << " Part One!" << std::endl << "----------------------" << std::endl;
             const auto partOneAnswer = calender.GetAnswer(day, PuzzleSection::PartOne, dataType);
 
             EXPECT_TRUE(partOneAnswer.mCompareFunc(partOneAnswer.mSolution, answerKey.mPartOneAnswer));

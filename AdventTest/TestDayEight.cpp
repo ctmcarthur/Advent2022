@@ -10,7 +10,7 @@
 namespace
 {
 
-    void FillTestData(DayEight::Forest& forest)
+    void FillTestData(DayEight2022::Forest& forest)
     {
         forest.AddNextTree(3);
         forest.AddNextTree(0);
@@ -47,7 +47,7 @@ namespace
 
 TEST(DayEight, TestPartOneExamples) 
 {
-    using namespace DayEight;
+    using namespace DayEight2022;
     Forest forest({ 5, 5 }, Forest::Mode::CalcHeightsOnAdd);
 
     FillTestData(forest);
@@ -57,7 +57,7 @@ TEST(DayEight, TestPartOneExamples)
 
 TEST(DayEight, TestPartTwoExamples)
 {
-    using namespace DayEight;
+    using namespace DayEight2022;
     Forest forest({ 5, 5 }, Forest::Mode::None);
 
     FillTestData(forest);

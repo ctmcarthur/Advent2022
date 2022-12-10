@@ -9,9 +9,9 @@
 
 namespace
 {
-    void FillExampleData(DayFive::SupplyStacksBlueprint& blueprint)
+    void FillExampleData(DayFive2022::SupplyStacksBlueprint& blueprint)
     {
-        using namespace DayFive;
+        using namespace DayFive2022;
 
         blueprint.AddBottomCrate(1, 'D');
         blueprint.AddBottomCrate(1, 'C');
@@ -24,7 +24,7 @@ namespace
 
 TEST(DayFive, TestBoxLoading) 
 {
-    using namespace DayFive;
+    using namespace DayFive2022;
     SupplyStacksBlueprint blueprint;
     FillExampleData(blueprint);
     EXPECT_EQ(blueprint.GetTopRow(), "NDP");
@@ -32,7 +32,7 @@ TEST(DayFive, TestBoxLoading)
 
 TEST(DayFive, PartOneBoxMoving)
 {
-    using namespace DayFive;
+    using namespace DayFive2022;
     SupplyStacksBlueprint blueprint;
     FillExampleData(blueprint);
     const auto craneVersion = CraneVersion::CRANE_9000;
@@ -60,7 +60,7 @@ TEST(DayFive, PartOneBoxMoving)
 
 TEST(DayFive, PartTwoBoxMoving)
 {
-    using namespace DayFive;
+    using namespace DayFive2022;
     SupplyStacksBlueprint blueprint;
     FillExampleData(blueprint);
 

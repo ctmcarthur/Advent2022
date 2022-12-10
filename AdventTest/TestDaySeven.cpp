@@ -10,7 +10,7 @@
 
 TEST(DaySeven, TestPartOneExamples) 
 {
-    using namespace DaySeven;
+    using namespace DaySeven2022;
     //   EXPECT_EQ(blueprint.GetTopRow(), "NDP");
     Terminal terminal;
 

@@ -2,7 +2,7 @@
 #include "AdventDay.h"
 
 //------------------------------------------------------------------------------
-AdventDay::AdventDay(YearId year, DayId day, std::pair<PuzzleFunc, PuzzleFunc> solutions)
+AdventDay::AdventDay(DayId day, YearId year, std::pair<PuzzleFunc, PuzzleFunc> solutions)
     : mYear(year)
     , mDay(day)
     , mPartOneFunc(std::move(solutions.first))

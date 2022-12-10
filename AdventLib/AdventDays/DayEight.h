@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DayEight
+namespace DayEight2022
 {
     enum class Direction : uint16_t
     {

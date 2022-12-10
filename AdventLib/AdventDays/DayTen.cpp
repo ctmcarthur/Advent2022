@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DayTen.h"
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
 /*
@@ -9,7 +10,7 @@
 
 
 */
-namespace DayTen
+namespace DayTen2022
 {
     
 
@@ -81,7 +82,7 @@ namespace DayTen
     }
 
     //------------------------------------------------------------------------------
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         CRT crt;
 
@@ -102,10 +103,10 @@ namespace DayTen
         }
         std::cout << "The Signal Strength Sum is: " << signalSum << std::endl;
 
-        return signalSum;
+        return { {signalSum}, {&CompareAny<uint32_t>} };
     }
 
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         CRT crt;
 

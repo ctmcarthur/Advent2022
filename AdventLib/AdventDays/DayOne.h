@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DayOne
+namespace DayOne2022
 {
 
 }

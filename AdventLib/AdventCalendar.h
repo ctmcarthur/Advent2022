@@ -29,7 +29,7 @@ constexpr YearId kCurrentYear = 2022;
 class AdventCalendar
 {
 public:
-    explicit AdventCalendar(YearId year = kCurrentYear) : mYear(year) {}
+    explicit AdventCalendar(YearId year = kCurrentYear);
     void DoToday() const; 
 
     using PuzzleSectionFlags = std::initializer_list<PuzzleSection>;

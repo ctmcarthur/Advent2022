@@ -26,7 +26,11 @@ namespace
 
 //------------------------------------------------------------------------------
 // AdventCalender definition
-
+AdventCalendar::AdventCalendar(YearId year) 
+    : mYear(year) 
+{
+    Year2022::RegisterDays();
+}
 
 //------------------------------------------------------------------------------
 void AdventCalendar::DoToday() const

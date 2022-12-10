@@ -2,6 +2,7 @@
 #include "DaySix.h"
 
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
 
@@ -15,7 +16,7 @@ which index has the previous 4 characters as unique?
 * alg
 every time, check the last 4 against a bitfield
 */
-namespace DaySix
+namespace DaySix2022
 {
     bool AllCharactersUnique(std::string_view code)
     {
@@ -33,7 +34,7 @@ namespace DaySix
         return letters.count() == code.size();
     }
 
-    size_t FindFirstKeyIdx(const std::string& input, uint32_t keySize)
+    size_t FindFirstKeyIdx(const std::string& input, size_t keySize)
     {
         assert(keySize > 0 && input.size() >= keySize);
 
@@ -54,28 +55,28 @@ namespace DaySix
     }
 
     //------------------------------------------------------------------------------
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         std::string input;
         std::getline(std::ifstream(filename), input);
 
-        constexpr uint32_t keySize = 4;
+        constexpr size_t keySize = 4;
         auto keyIdx = FindFirstKeyIdx(input, keySize);
         std::cout << "Index of Decoding Key: " << keyIdx << std::endl;
 
-        return keyIdx;
+        return { {keyIdx}, {&CompareAny<size_t>} };
     }
 
     //------------------------------------------------------------------------------
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         std::string input;
         std::getline(std::ifstream(filename), input);
 
         constexpr uint32_t keySize = 14;
-        auto keyIdx = FindFirstKeyIdx(input, keySize);
+        size_t keyIdx = FindFirstKeyIdx(input, keySize);
         std::cout << "Index of Decoding Key: " << keyIdx << std::endl;
 
-        return keyIdx;
+        return { {keyIdx}, {&CompareAny<size_t>} };
     }
 }

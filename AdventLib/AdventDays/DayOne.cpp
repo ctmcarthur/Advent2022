@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "DayOne.h"
 
+// AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
 
 //------------------------------------------------------------------------------
-namespace DayOne
+namespace DayOne2022
 {
     //------------------------------------------------------------------------------
     // Helpers
@@ -23,7 +25,7 @@ namespace DayOne
     }
 
     //------------------------------------------------------------------------------
-    CalorieCount ParseCalories(const std::string& filename)
+    CalorieCount ParseCalories(const std::filesystem::path& filename)
     {
         const auto fileLines = StringUtils::SplitFile(filename);
         CalorieCount calories;
@@ -48,19 +50,19 @@ namespace DayOne
 
     //------------------------------------------------------------------------------
     // Part 1
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {        
         CalorieCount calories = ParseCalories(filename);
         const uint32_t maxCals = GetMaxSum(calories, 1);
         
         std::cout << "Elf With the Most Calories: " << maxCals << std::endl;
        
-        return maxCals;
+        return { {maxCals}, {&CompareAny<uint32_t>} };
     }
 
     //------------------------------------------------------------------------------
     // Part 2
-    std::any DoPartTwo(const std::string& filename) 
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     { 
         CalorieCount calories = ParseCalories(filename);
 
@@ -70,6 +72,6 @@ namespace DayOne
         std::cout << "Calories carried by Top " << topCount << " elves: " 
             << maxThree << std::endl;
 
-        return maxThree;
+        return { {maxThree}, {&CompareAny<uint32_t>} };
     }
 }

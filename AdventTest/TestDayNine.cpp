@@ -9,7 +9,7 @@
 
 TEST(DayNine, TestPartOneExamples)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
 
     RopeGrid ropeGrid;
 
@@ -37,7 +37,7 @@ TEST(DayNine, TestPartOneExamples)
 
 TEST(DayNine, TestRopeTailStationary)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
 
     // dont move
     {
@@ -61,7 +61,7 @@ TEST(DayNine, TestRopeTailStationary)
 
 TEST(DayNine, RopeMoveShortCardinal)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
 
     //Right
     {
@@ -98,7 +98,7 @@ TEST(DayNine, RopeMoveShortCardinal)
 
 TEST(DayNine, RopeMoveLongCardinal)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
 
     //Right
     {
@@ -148,7 +148,7 @@ TEST(DayNine, RopeMoveLongCardinal)
 
 TEST(DayNine, RopeMoveShortDiagonal)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
 
     //Right/Up
     {
@@ -187,7 +187,7 @@ TEST(DayNine, RopeMoveShortDiagonal)
 
 TEST(DayNine, RopeMoveLongDiagonal)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
 
     {
         //Right/Up -> Right
@@ -276,7 +276,7 @@ TEST(DayNine, RopeMoveLongDiagonal)
 
 TEST(DayNine, RopeBacktrack)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
     {
         RopeGrid ropeGrid;
         ropeGrid.MoveHead(GridDirection::Left);
@@ -291,7 +291,7 @@ TEST(DayNine, RopeBacktrack)
 
 TEST(DayNine, RopeLongContinuousDiagonal)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
     //Right/Down -> Down
     {
         RopeGrid ropeGrid;
@@ -317,7 +317,7 @@ TEST(DayNine, RopeLongContinuousDiagonal)
 
 TEST(DayNine, PartTwoExample)
 {
-    using namespace DayNine;
+    using namespace DayNine2022;
     RopeGrid ropeGrid(10);
     ropeGrid.MoveHead(GridDirection::Right, 5);
     ropeGrid.MoveHead(GridDirection::Up,8);

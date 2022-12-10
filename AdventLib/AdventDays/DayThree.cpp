@@ -1,5 +1,7 @@
 #include "pch.h"
 
+// AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
 // system
@@ -15,7 +17,7 @@ priority: a-z = 1-26  , A-Z = 27-52
 Find the item type that appears in both compartments of each rucksack. 
 What is the sum of the priorities of those item types?
 */
-namespace DayThree
+namespace DayThree2022
 {
     //------------------------------------------------------------------------------
     // Helpers
@@ -78,7 +80,7 @@ namespace DayThree
     
     //------------------------------------------------------------------------------
     // Part One
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         const auto input = StringUtils::SplitFile(filename);
         uint32_t prioritySum = 0;
@@ -105,13 +107,13 @@ namespace DayThree
         }
 
         std::cout << "The Priority Sum is: " << prioritySum;
-        return prioritySum;
+        return { {prioritySum}, {&CompareAny<uint32_t>} };;
     }
 
     //------------------------------------------------------------------------------
     //Part 2
   
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         constexpr uint32_t kElfGroupSize = 3;
   
@@ -127,6 +129,6 @@ namespace DayThree
         
 
         std::cout << "The Sum of The " << kElfGroupSize << " Badges is : " << prioritySum;
-        return prioritySum;
+        return { {prioritySum}, {&CompareAny<uint32_t>} };
     }
 }

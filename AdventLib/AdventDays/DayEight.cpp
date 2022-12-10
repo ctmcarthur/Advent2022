@@ -2,6 +2,7 @@
 #include "DayEight.h"
 
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
 
@@ -27,7 +28,7 @@ Tree
 /*
 for each tree, if my height is higher than all my max height neighbors, i am visible. 
 */
-namespace DayEight
+namespace DayEight2022
 {
     constexpr std::array<std::pair<int16_t, int16_t>, static_cast<size_t>(Direction::COUNT)> kOffsets =
     { {
@@ -253,7 +254,7 @@ namespace DayEight
 
     //------------------------------------------------------------------------------
     // Part One
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         auto input = StringUtils::SplitFile(filename);
 
@@ -270,12 +271,12 @@ namespace DayEight
         const uint32_t numTrees = forest.CountVisibleTrees();
 
         std::cout << "The number of trees visible is: " << numTrees << std::endl;
-        return numTrees;
+        return { {numTrees}, {&CompareAny<uint32_t>} };
     }
 
     //------------------------------------------------------------------------------
     // Part Two
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         auto input = StringUtils::SplitFile(filename);
 
@@ -292,6 +293,6 @@ namespace DayEight
         const uint32_t scenicScore = forest.GetScenicScore();
 
         std::cout << "The Max Scenic Score is: " << scenicScore << std::endl;
-        return scenicScore;
+        return { {scenicScore}, {&CompareAny<uint32_t>} };
     }
 }

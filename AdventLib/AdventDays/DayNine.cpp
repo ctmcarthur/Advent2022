@@ -8,7 +8,7 @@
 #include <Utilities/Hashing.h>
 #include <Utilities/StringUtils.h>
 
-namespace DayNine
+namespace DayNine2022
 {
     /*
       Tail can only be max of 1 unit distance behind.
@@ -34,21 +34,21 @@ namespace DayNine
     void RopeGrid::MoveHead(GridDirection direction)
     {
         assert(mKnots.size() > 1);
-        
+
         const auto tailKnot = std::prev(mKnots.end());
 
 
         auto currentKnot = mKnots.begin();
 
         (*currentKnot) = ShiftOnGrid(*currentKnot, direction);
-        
-        for (;currentKnot != tailKnot; ++currentKnot)
+
+        for (; currentKnot != tailKnot; ++currentKnot)
         {
             PullTail(*currentKnot, *std::next(currentKnot));
         }
-            
+
         RecordTail(*tailKnot);
-        
+
     }
 
     void RopeGrid::MoveHead(GridDirection direction, uint32_t repeat)
@@ -73,7 +73,7 @@ namespace DayNine
     {
         return absoluteDistance.dX > 1 || absoluteDistance.dY > 1;
     }
-    
+
     //------------------------------------------------------------------------------
     GridOffset NormalizeOffset(const GridOffset& offset)
     {
@@ -106,7 +106,7 @@ namespace DayNine
         return normalized;
     }
 
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
     bool PullTail(const GridCoordinate& headPos, GridCoordinate& tailPos)
     {
         const GridOffset distance = headPos.Distance(tailPos);
@@ -120,16 +120,16 @@ namespace DayNine
         {
             return false;
         }
-      
+
         const GridOffset moveDirection = NormalizeOffset(distance);
-        
+
         tailPos.x += moveDirection.dX;
         tailPos.y += moveDirection.dY;
         return true;
     }
 
 
-   
+
     //------------------------------------------------------------------------------
     // Parsing
     void ParseInput(const std::filesystem::path& filename, RopeGrid& outRopeGrid)
@@ -181,6 +181,4 @@ namespace DayNine
 
         return { {numVisited}, {kSolutionFunc} };
     }
-
-    const AdventDay gDayNine(2022, 9, { &DoPartOne, &DoPartTwo });
 }

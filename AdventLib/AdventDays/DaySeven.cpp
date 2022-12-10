@@ -2,6 +2,7 @@
 #include "DaySeven.h"
 
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
 /*
@@ -20,7 +21,7 @@ Find all of the directories with a total size of at most 100000.
 What is the sum of the total sizes of those directories?
 */
 
-namespace DaySeven
+namespace DaySeven2022
 {
     //------------------------------------------------------------------------------
     // Data Model
@@ -118,7 +119,7 @@ namespace DaySeven
      static constexpr std::string_view kDirToken = "dir";
 
      //------------------------------------------------------------------------------
-     void ParseFileSystem(const std::string& filename, Terminal& terminal)
+     void ParseFileSystem(const std::filesystem::path& filename, Terminal& terminal)
      {
          Directory* currDir = nullptr;
 
@@ -157,7 +158,7 @@ namespace DaySeven
 
     //------------------------------------------------------------------------------
     // Part One
-    std::any DoPartOne(const std::string& filename)
+     PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
 
         Terminal terminal;
@@ -167,7 +168,7 @@ namespace DaySeven
         const size_t totalSize = terminal.GetSumSize(partOneMaxSize);
 
         std::cout << "The total sum of directories under " << partOneMaxSize << " is: " << totalSize << std::endl;
-        return totalSize;
+        return { {totalSize}, {&CompareAny<size_t>} }; 
     }
 
     //------------------------------------------------------------------------------
@@ -207,7 +208,7 @@ namespace DaySeven
 
     }
 
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         Terminal terminal;
         ParseFileSystem(filename, terminal);
@@ -217,6 +218,6 @@ namespace DaySeven
 
         std::cout << "Min Size Dir to Delete: " << minSize << std::endl;
 
-        return minSize;
+        return { {minSize}, {&CompareAny<size_t>} };
     }
 }

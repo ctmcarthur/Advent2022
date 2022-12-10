@@ -1,8 +1,10 @@
 #include "pch.h"
 
+// AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
-namespace DayFour
+namespace DayFour2022
 {
     //------------------------------------------------------------------------------
     // Part One
@@ -42,7 +44,7 @@ namespace DayFour
 
     //------------------------------------------------------------------------------
     // Do Part One
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         const auto input = StringUtils::SplitFile(filename);
         
@@ -60,7 +62,7 @@ namespace DayFour
 
         std::cout << "There are " << superSetCount << " Supersets!" << std::endl;
 
-        return superSetCount;
+        return { {superSetCount}, {&CompareAny<uint32_t>} };;
     }
 
 
@@ -92,7 +94,7 @@ namespace DayFour
     }
 
     //------------------------------------------------------------------------------
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         const auto input = StringUtils::SplitFile(filename);
 
@@ -109,6 +111,6 @@ namespace DayFour
         }
 
         std::cout << "There are " << superSetCount << " Overlaps!" << std::endl;
-        return superSetCount;
+        return { {superSetCount}, {&CompareAny<uint32_t>} };
     }
 }

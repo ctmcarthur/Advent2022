@@ -1,9 +1,10 @@
 #include "pch.h"
 
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
-namespace DayTwo
+namespace DayTwo2022
 {
     //------------------------------------------------------------------------------
     // Game Enums
@@ -112,7 +113,7 @@ namespace DayTwo
 
     //------------------------------------------------------------------------------
     // Part 1
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         const auto input = StringUtils::SplitFile(filename);
         uint32_t score = 0;
@@ -125,7 +126,7 @@ namespace DayTwo
         }
 
         std::cout << "I scored " << score << " points!" << std::endl;
-        return score;
+        return { {score}, {&CompareAny<uint32_t>} };
     }
 
      //------------------------------------------------------------------------------
@@ -165,7 +166,7 @@ namespace DayTwo
     };
 
     //------------------------------------------------------------------------------
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         const auto input = StringUtils::SplitFile(filename);
         uint32_t score = 0;
@@ -181,7 +182,7 @@ namespace DayTwo
 
         std::cout << "I scored " << score << " points!" << std::endl;
 
-        return score;
+        return { {score}, {&CompareAny<uint32_t>} };
     }
 }
 

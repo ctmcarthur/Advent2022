@@ -2,9 +2,10 @@
 #include "DayFive.h"
 
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/StringUtils.h>
 
-namespace DayFive
+namespace DayFive2022
 {
     //------------------------------------------------------------------------------
     // SupplyStacksBlueprint
@@ -133,7 +134,7 @@ namespace DayFive
         outInstructions.dest = static_cast<size_t>(std::stoi(std::string{ input.at(dstIdx) })) - 1;
     }
 
-    std::string ParseAndExecute(const std::string& filename, CraneVersion craneVersion)
+    std::string ParseAndExecute(const std::filesystem::path& filename, CraneVersion craneVersion)
     {
         const auto input = StringUtils::SplitFile(filename);
 
@@ -167,14 +168,14 @@ namespace DayFive
 
     //------------------------------------------------------------------------------
     // Do Part One
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         std::string topRow = ParseAndExecute(filename, CraneVersion::CRANE_9000);
 
         std::cout << "Top Row of Crates are labeled: " << topRow << std::endl;
 
 
-        return topRow;
+        return { {topRow}, {&CompareAny<std::string>} };
     }
 
 
@@ -184,7 +185,7 @@ namespace DayFive
     //------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
 
         std::string topRow = ParseAndExecute(filename, CraneVersion::CRANE_9001);
@@ -193,6 +194,6 @@ namespace DayFive
         std::cout << "The Crane 9001 Stacked Crates are labeled: " << topRow << std::endl;
 
 
-        return topRow;
+        return { {topRow}, {&CompareAny<std::string>} };
     }
 }

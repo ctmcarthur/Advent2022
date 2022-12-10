@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DaySix
+namespace DaySix2022
 {
-    size_t FindFirstKeyIdx(const std::string& input, uint32_t keySize);
+    size_t FindFirstKeyIdx(const std::string& input, size_t keySize);
 }

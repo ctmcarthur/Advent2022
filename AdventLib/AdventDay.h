@@ -26,7 +26,7 @@ using PuzzleFunc = std::function<PuzzleSolution(const std::filesystem::path& fil
 class AdventDay
 {
 public:
-    AdventDay(YearId year, DayId day, std::pair<PuzzleFunc, PuzzleFunc> solutions);
+    AdventDay(DayId day, YearId year, std::pair<PuzzleFunc, PuzzleFunc> solutions);
     
     YearId GetYear() const { return mYear; }
     DayId GetDay() const { return mDay; }
@@ -39,8 +39,8 @@ public:
     static const AdventDayCatalog* GetDaysForYear(YearId year);
 
 private:
-    YearId mYear;
     DayId mDay;
+    YearId mYear;
 
     PuzzleFunc mPartOneFunc;
     PuzzleFunc mPartTwoFunc;
