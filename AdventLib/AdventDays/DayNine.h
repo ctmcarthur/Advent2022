@@ -12,6 +12,8 @@ namespace DayNine
         void MoveHead(GridDirection direction, int32_t repeat);
 
         size_t GetUniqueVisited() const { return mTailVisited.size(); }
+        const GridCoordinate& GetHead() const { return mHeadPos; }
+        const GridCoordinate& GetTail() const { return mTailPos; }
 
     private:
         void PullTail();

@@ -85,8 +85,6 @@ namespace DayNine
         {
             toMove.second *= -1;
         }
-
-
         
       //  std::cout << "toMove x: " << toMove.first << " toMove y: " << toMove.second << std::endl;
         mTailPos = mTailPos + toMove;
