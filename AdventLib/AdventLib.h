@@ -63,12 +63,12 @@ namespace DayNine
     std::any DoPartTwo(const std::string& filename);
 }
 
-/*
+
 namespace DayTen
 {
     std::any DoPartOne(const std::string& filename);
     std::any DoPartTwo(const std::string& filename);
-}*/
+}
 
 /*
 namespace DayEleven

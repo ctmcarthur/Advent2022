@@ -28,7 +28,7 @@ GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs)
 namespace
 {
     using ShiftArray = EnumArray<GridDirection, GridOffset>;
-    static constexpr ShiftArray kDirectionOffsets(ShiftArray::DataType(
+    constexpr ShiftArray kDirectionOffsets(ShiftArray::DataType(
         {
            {int32_t{-1}, int32_t{0}}, // Left
            {int32_t{1}, int32_t{0}}, // Right
