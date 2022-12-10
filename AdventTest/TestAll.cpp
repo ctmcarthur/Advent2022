@@ -29,9 +29,6 @@ namespace
     class DayAnswerKey
     {
     public:
-        using CompareFunc = std::function<bool(const std::any& lhs, const std::any& rhs)>;
-
-        CompareFunc mCompareFunc;
         std::any mPartOneAnswer; 
         std::any mPartTwoAnswer; // might not solve part two.
     };
@@ -45,50 +42,50 @@ namespace
     {
         {1,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<uint32_t>, {24000u}, {45000u}}},
-                {PuzzleInputType::RealData, {&CompareAny<uint32_t>, {68292u}, {203203u}}}
+                {PuzzleInputType::ExampleData, {{24000u}, {45000u}}},
+                {PuzzleInputType::RealData, {{68292u}, {203203u}}}
             }
         },
         {2,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<uint32_t>, {15u}, {12u}}},
-                {PuzzleInputType::RealData, {&CompareAny<uint32_t>, {13268u}, {15508u}}}
+                {PuzzleInputType::ExampleData, {{15u}, {12u}}},
+                {PuzzleInputType::RealData, {{13268u}, {15508u}}}
             }
         },
         {3,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<uint32_t>, {157u}, {70u}}},
-                {PuzzleInputType::RealData, {&CompareAny<uint32_t>, {7997u}, {2545u}}}
+                {PuzzleInputType::ExampleData, {{157u}, {70u}}},
+                {PuzzleInputType::RealData, {{7997u}, {2545u}}}
             }
         },
         {4,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<uint32_t>, {2u}, {4u}}},
-                {PuzzleInputType::RealData, {&CompareAny<uint32_t>, {528u}, {881u}}}
+                {PuzzleInputType::ExampleData, {{2u}, {4u}}},
+                {PuzzleInputType::RealData, {{528u}, {881u}}}
             }
         },
         {5,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<std::string>, {std::string("CMZ")}, {std::string("MCD")}}},
-                {PuzzleInputType::RealData, {&CompareAny<std::string>, {std::string("FCVRLMVQP")}, {std::string("RWLWGJGFD")}}}
+                {PuzzleInputType::ExampleData, {{std::string("CMZ")}, {std::string("MCD")}}},
+                {PuzzleInputType::RealData, {{std::string("FCVRLMVQP")}, {std::string("RWLWGJGFD")}}}
             }
         },
         {6,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<size_t>, size_t{7}, size_t{19}}},
-                {PuzzleInputType::RealData, {&CompareAny<size_t>, size_t{1034}, size_t{2472}}}
+                {PuzzleInputType::ExampleData, {size_t{7}, size_t{19}}},
+                {PuzzleInputType::RealData, {size_t{1034}, size_t{2472}}}
             }
         },
         {7,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<size_t>, size_t{95437}, size_t{24933642}}},
-                {PuzzleInputType::RealData, {&CompareAny<size_t>, size_t{1428881}, size_t{10475598}}}
+                {PuzzleInputType::ExampleData, {size_t{95437}, size_t{24933642}}},
+                {PuzzleInputType::RealData, {size_t{1428881}, size_t{10475598}}}
             }
         },
         {8,
             {
-                {PuzzleInputType::ExampleData, {&CompareAny<uint32_t>, {21u}, {8u}}},
-                {PuzzleInputType::RealData, {&CompareAny<uint32_t>, {1533u}, {345744u}}}
+                {PuzzleInputType::ExampleData, {{21u}, {8u}}},
+                {PuzzleInputType::RealData, {{1533u}, {345744u}}}
             }
         },
     };
@@ -103,7 +100,7 @@ namespace
             std::cout << "Testing day " << day << " Part One!" << std::endl << "----------------------" << std::endl;
             const auto partOneAnswer = calender.GetAnswer(day, PuzzleSection::PartOne, dataType);
 
-            EXPECT_TRUE(answerKey.mCompareFunc(partOneAnswer, answerKey.mPartOneAnswer));
+            EXPECT_TRUE(partOneAnswer.mCompareFunc(partOneAnswer.mSolution, answerKey.mPartOneAnswer));
         }
         
         // part two is optional
@@ -111,7 +108,7 @@ namespace
         {
             std::cout << "Testing day " << day << " Part Two!" << std::endl << "----------------------" << std::endl;
            const auto partTwoAnswer = calender.GetAnswer(day, PuzzleSection::PartTwo, dataType);
-           EXPECT_TRUE(answerKey.mCompareFunc(partTwoAnswer, answerKey.mPartTwoAnswer));
+           EXPECT_TRUE(partTwoAnswer.mCompareFunc(partTwoAnswer.mSolution, answerKey.mPartTwoAnswer));
         }    
     }
 

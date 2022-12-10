@@ -84,18 +84,18 @@ public:
    
     //------------------------------------------------------------------------------
     //  Iterators
-    std::vector<T>::iterator begin() noexcept { return mGrid.begin(); }
-    std::vector<T>::iterator end() noexcept { return mGrid.end(); }
-    std::vector<T>::const_iterator begin() const noexcept { return mGrid.begin(); }
-    std::vector<T>::const_iterator end() const noexcept { return mGrid.end(); }
-    std::vector<T>::const_iterator cbegin() const noexcept { return mGrid.cbegin(); }
-    std::vector<T>::const_iterator cend() const noexcept { return mGrid.cend(); }
-    std::vector<T>::reverse_iterator rbegin() noexcept { return mGrid.rbegin(); }
-    std::vector<T>::reverse_iterator rend() noexcept { return mGrid.rend(); }
-    std::vector<T>::const_reverse_iterator rbegin() const noexcept { return mGrid.rbegin(); }
-    std::vector<T>::const_reverse_iterator rend() const noexcept { return mGrid.rend(); }
-    std::vector<T>::const_reverse_iterator crbegin() const noexcept { return mGrid.crbegin(); }
-    std::vector<T>::const_reverse_iterator crend() const noexcept { return mGrid.crend(); }
+    typename std::vector<T>::iterator begin() noexcept { return mGrid.begin(); }
+    typename std::vector<T>::iterator end() noexcept { return mGrid.end(); }
+    typename std::vector<T>::const_iterator begin() const noexcept { return mGrid.begin(); }
+    typename std::vector<T>::const_iterator end() const noexcept { return mGrid.end(); }
+    typename std::vector<T>::const_iterator cbegin() const noexcept { return mGrid.cbegin(); }
+    typename std::vector<T>::const_iterator cend() const noexcept { return mGrid.cend(); }
+    typename std::vector<T>::reverse_iterator rbegin() noexcept { return mGrid.rbegin(); }
+    typename std::vector<T>::reverse_iterator rend() noexcept { return mGrid.rend(); }
+    typename std::vector<T>::const_reverse_iterator rbegin() const noexcept { return mGrid.rbegin(); }
+    typename std::vector<T>::const_reverse_iterator rend() const noexcept { return mGrid.rend(); }
+    typename std::vector<T>::const_reverse_iterator crbegin() const noexcept { return mGrid.crbegin(); }
+    typename std::vector<T>::const_reverse_iterator crend() const noexcept { return mGrid.crend(); }
 
 private:
     size_t mWidth;

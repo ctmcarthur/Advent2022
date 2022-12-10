@@ -2,6 +2,7 @@
 #include "DayNine.h"
 
 // AdventLib
+#include <AdventDay.h>
 #include <Utilities/EnumArray.h>
 #include <Utilities/Grid.h>
 #include <Utilities/Hashing.h>
@@ -41,7 +42,7 @@ namespace DayNine
 
         (*currentKnot) = ShiftOnGrid(*currentKnot, direction);
         
-        for (currentKnot; currentKnot != tailKnot; ++currentKnot)
+        for (;currentKnot != tailKnot; ++currentKnot)
         {
             PullTail(*currentKnot, *std::next(currentKnot));
         }
@@ -50,9 +51,9 @@ namespace DayNine
         
     }
 
-    void RopeGrid::MoveHead(GridDirection direction, int32_t repeat)
+    void RopeGrid::MoveHead(GridDirection direction, uint32_t repeat)
     {
-        for (int32_t i = 0; i < repeat; ++i)
+        for (uint32_t i = 0; i < repeat; ++i)
         {
             MoveHead(direction);
         }
@@ -78,7 +79,7 @@ namespace DayNine
     {
         GridOffset normalized = { 0,0 };
 
-        if (offset.dX)
+        if (offset.dX != 0)
         {
             if (offset.dX < 0)
             {
@@ -90,7 +91,7 @@ namespace DayNine
             }
         }
 
-        if (offset.dY)
+        if (offset.dY != 0)
         {
             if (offset.dY < 0)
             {
@@ -131,7 +132,7 @@ namespace DayNine
    
     //------------------------------------------------------------------------------
     // Parsing
-    void ParseInput(const std::string& filename, RopeGrid& outRopeGrid)
+    void ParseInput(const std::filesystem::path& filename, RopeGrid& outRopeGrid)
     {
         static const std::unordered_map<char, GridDirection> kInputDirMap =
         {
@@ -152,9 +153,12 @@ namespace DayNine
             outRopeGrid.MoveHead(kInputDirMap.at(dirChar), count);
         }
     }
+
+    static const PuzzleSolution::CompareFunc kSolutionFunc = &CompareAny<size_t>;
+
     //------------------------------------------------------------------------------
     // Part One
-    std::any DoPartOne(const std::string& filename)
+    PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         RopeGrid ropeGrid;
         ParseInput(filename, ropeGrid);
@@ -162,12 +166,12 @@ namespace DayNine
         const auto numVisited = ropeGrid.GetUniqueVisited();
         std::cout << "Number of Locations Visited is: " << numVisited << std::endl;
 
-        return numVisited;
+        return { {numVisited}, {kSolutionFunc} };
     }
 
     //------------------------------------------------------------------------------
     // Part Two
-    std::any DoPartTwo(const std::string& filename)
+    PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
         RopeGrid ropeGrid(10);
         ParseInput(filename, ropeGrid);
@@ -175,6 +179,8 @@ namespace DayNine
         const auto numVisited = ropeGrid.GetUniqueVisited();
         std::cout << "Number of Locations Visited by Tail is: " << numVisited << std::endl;
 
-        return numVisited;
+        return { {numVisited}, {kSolutionFunc} };
     }
+
+    const AdventDay gDayNine(2022, 9, { &DoPartOne, &DoPartTwo });
 }

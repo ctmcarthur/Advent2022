@@ -1,5 +1,7 @@
 #pragma once
 
+// Advent Lib
+#include <AdventDay.h>
 // system
 #include <any>
 #include <cstdint>
@@ -20,33 +22,23 @@ enum class PuzzleInputType : uint32_t
     RealData
 };
 
-//------------------------------------------------------------------------------
-using DayId = uint32_t;
 
-//------------------------------------------------------------------------------
-class AdventDay
-{
-public:
-    using PuzzleFunc = std::function<std::any(const std::string&)>;
-
-    PuzzleFunc mDayOne;
-    PuzzleFunc mDayTwo;
-};
+constexpr YearId kCurrentYear = 2022; 
 
 //------------------------------------------------------------------------------
 class AdventCalendar
 {
 public:
-    AdventCalendar();
-    void DoToday(); 
+    explicit AdventCalendar(YearId year = kCurrentYear) : mYear(year) {}
+    void DoToday() const; 
 
     using PuzzleSectionFlags = std::initializer_list<PuzzleSection>;
 
-    void DoDay(DayId day, PuzzleSectionFlags sections, PuzzleInputType dataSrc);
-    void DoEveryDay(PuzzleSectionFlags sections, PuzzleInputType dataSrc);
+    void DoDay(DayId day, PuzzleSectionFlags sections, PuzzleInputType dataSrc) const;
+    void DoEveryDay(PuzzleSectionFlags sections, PuzzleInputType dataSrc) const;
 
-    std::any GetAnswer(DayId day, PuzzleSection section, PuzzleInputType dataSrc) const;
+    PuzzleSolution GetAnswer(DayId day, PuzzleSection section, PuzzleInputType dataSrc) const;
 
 private:
-    std::map<DayId, AdventDay> mDays;
+    YearId mYear;
 };

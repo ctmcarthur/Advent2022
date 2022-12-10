@@ -10,7 +10,7 @@ namespace DayNine
         explicit RopeGrid(size_t knotCount);
 
         void MoveHead(GridDirection direction);
-        void MoveHead(GridDirection direction, int32_t repeat);
+        void MoveHead(GridDirection direction, uint32_t repeat);
 
         size_t GetUniqueVisited() const { return mTailVisited.size(); }
         const GridCoordinate& GetHead() const { return mKnots.front(); }

@@ -47,18 +47,18 @@ public:
 
     //------------------------------------------------------------------------------
     //  Iterators
-    DataType::iterator begin() noexcept { return mData.begin(); }
-    DataType::iterator end() noexcept { return mData.end(); }
-    DataType::const_iterator begin() const noexcept { return mData.begin(); }
-    DataType::const_iterator end() const noexcept { return mData.end(); }
-    DataType::const_iterator cbegin() const noexcept { return mData.cbegin(); }
-    DataType::const_iterator cend() const noexcept { return mData.cend(); }
-    DataType::reverse_iterator rbegin() noexcept { return mData.rbegin(); }
-    DataType::reverse_iterator rend() noexcept { return mData.rend(); }
-    DataType::const_reverse_iterator rbegin() const noexcept { return mData.rbegin(); }
-    DataType::const_reverse_iterator rend() const noexcept { return mData.rend(); }
-    DataType::const_reverse_iterator crbegin() const noexcept { return mData.crbegin(); }
-    DataType::const_reverse_iterator crend() const noexcept { return mData.crend(); }
+    typename DataType::iterator begin() noexcept { return mData.begin(); }
+    typename DataType::iterator end() noexcept { return mData.end(); }
+    typename DataType::const_iterator begin() const noexcept { return mData.begin(); }
+    typename DataType::const_iterator end() const noexcept { return mData.end(); }
+    typename DataType::const_iterator cbegin() const noexcept { return mData.cbegin(); }
+    typename DataType::const_iterator cend() const noexcept { return mData.cend(); }
+    typename DataType::reverse_iterator rbegin() noexcept { return mData.rbegin(); }
+    typename DataType::reverse_iterator rend() noexcept { return mData.rend(); }
+    typename DataType::const_reverse_iterator rbegin() const noexcept { return mData.rbegin(); }
+    typename DataType::const_reverse_iterator rend() const noexcept { return mData.rend(); }
+    typename DataType::const_reverse_iterator crbegin() const noexcept { return mData.crbegin(); }
+    typename DataType::const_reverse_iterator crend() const noexcept { return mData.crend(); }
 
 private:
     DataType mData;
