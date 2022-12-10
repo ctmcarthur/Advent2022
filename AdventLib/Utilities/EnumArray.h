@@ -12,13 +12,13 @@ class EnumArray
 public:
     using DataType = std::array<T, kArraySize>;
    
-    EnumArray() = default;
+    constexpr EnumArray() = default;
     explicit constexpr EnumArray(DataType&& init)
         : mData(init)
     {}
 
     //------------------------------------------------------------------------------
-    T& at(EnumClass idx)
+    constexpr T& at(EnumClass idx)
     {
         const auto dataIdx = (static_cast<size_t>(idx) - static_cast<size_t>(_First));
         assert(dataIdx >= 0 && dataIdx < kArraySize);
@@ -26,7 +26,7 @@ public:
         return mData.at(dataIdx);
     }
 
-    const T& at(EnumClass idx) const
+    constexpr const T& at(EnumClass idx) const
     {
         const auto dataIdx = (static_cast<size_t>(idx) - static_cast<size_t>(_First));
 
@@ -35,12 +35,12 @@ public:
         return mData.at(dataIdx);
     }
 
-    T& operator[](EnumClass idx)
+    constexpr T& operator[](EnumClass idx)
     {
         return at(idx);
     }
 
-    const T& operator[](EnumClass idx) const
+    constexpr const T& operator[](EnumClass idx) const
     {
         return at(idx);
     }

@@ -59,6 +59,15 @@ namespace DayNine
     }
 
     //------------------------------------------------------------------------------
+    void RopeGrid::RecordTail(const GridCoordinate& tailPos)
+    {
+        mTailVisited.insert(tailPos);
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Helper Functions
+
     bool ShouldMove(const GridOffset& absoluteDistance)
     {
         return absoluteDistance.dX > 1 || absoluteDistance.dY > 1;
@@ -115,29 +124,23 @@ namespace DayNine
         
         tailPos.x += moveDirection.dX;
         tailPos.y += moveDirection.dY;
-     return true;
+        return true;
     }
 
-    //------------------------------------------------------------------------------
-    void RopeGrid::RecordTail(const GridCoordinate& tailPos)
-    {
-        mTailVisited.insert(tailPos);
-    }
-
-    //------------------------------------------------------------------------------
-    static const std::unordered_map<char, GridDirection> kInputDirMap =
-    {
-        {'L', GridDirection::Left},
-        {'R', GridDirection::Right},
-        {'U', GridDirection::Up},
-        {'D', GridDirection::Down}
-    };
 
    
     //------------------------------------------------------------------------------
     // Parsing
     void ParseInput(const std::string& filename, RopeGrid& outRopeGrid)
     {
+        static const std::unordered_map<char, GridDirection> kInputDirMap =
+        {
+            {'L', GridDirection::Left},
+            {'R', GridDirection::Right},
+            {'U', GridDirection::Up},
+            {'D', GridDirection::Down}
+        };
+
         static constexpr size_t kInputDirIdx = 0;
         static constexpr size_t kInputCountIdx = 2;
 

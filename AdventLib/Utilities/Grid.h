@@ -52,11 +52,11 @@ public:
     }
 
     //------------------------------------------------------------------------------
-    size_t GetWidth() const { return mWidth; }
-    size_t GetHeight() const { return mWidth; }
+    [[nodiscard]] size_t GetWidth() const { return mWidth; }
+    [[nodiscard]] size_t GetHeight() const { return mWidth; }
 
     //------------------------------------------------------------------------------
-    T& at(GridCoordinate location)
+    [[nodiscard]] T& at(GridCoordinate location)
     {
         assert(location.x < mWidth);
         assert(location.y < mHeight);
@@ -64,7 +64,7 @@ public:
         return mGrid.at(location.y * mWidth + location.x);
     }
 
-    const T& at(GridCoordinate location) const
+    [[nodiscard]] const T& at(GridCoordinate location) const
     {
         assert(location.x < mWidth);
         assert(location.y < mHeight);
@@ -72,12 +72,12 @@ public:
         return mGrid.at(location.y * mWidth + location.x);
     }
 
-    T& operator[](GridCoordinate location)
+    [[nodiscard]] T& operator[](GridCoordinate location)
     {
         return at(location);
     }
 
-    const T& operator[](GridCoordinate location) const
+    [[nodiscard]] const T& operator[](GridCoordinate location) const
     {
         return at(location);
     }
@@ -116,3 +116,4 @@ enum class GridDirection : uint16_t
 };
 
 GridCoordinate ShiftOnGrid(GridCoordinate pos, GridDirection dir);
+std::ostream& operator<< (std::ostream& out, GridDirection dataSrc);

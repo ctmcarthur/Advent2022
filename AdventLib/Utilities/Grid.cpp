@@ -21,11 +21,6 @@ GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs)
 {
     return { lhs.x + rhs.dX, lhs.y + rhs.dY };
 }
-/*
-GridCoordinate operator+(const GridCoordinate& lhs, const GridCoordinate& rhs)
-{
-    return { lhs.x + rhs.x, lhs.y + rhs.y };
-}*/
 
 //------------------------------------------------------------------------------
 // Direction
@@ -52,3 +47,29 @@ GridCoordinate ShiftOnGrid(GridCoordinate pos, GridDirection dir)
    // assert(offset.second >= 0 || pos.y > 0);
     return pos + offset;
 }
+
+//------------------------------------------------------------------------------
+std::ostream& operator<< (std::ostream& out, GridDirection dataSrc)
+{
+    switch (dataSrc)
+    {
+    case GridDirection::Left:
+        out << "Left";
+        break;
+
+    case GridDirection::Right:
+        out << "Right";
+        break;
+    
+    case GridDirection::Up:
+        out << "Up";
+        break;
+
+    case GridDirection::Down:
+        out << "Down";
+        break;
+    }
+
+    return out;
+}
+
