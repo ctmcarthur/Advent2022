@@ -19,7 +19,7 @@ GridOffset GridCoordinate::Distance(GridCoordinate& rhs) const
 
 GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs)
 {
-    return { lhs.x + rhs.first, lhs.y + rhs.second };
+    return { lhs.x + rhs.dX, lhs.y + rhs.dY };
 }
 /*
 GridCoordinate operator+(const GridCoordinate& lhs, const GridCoordinate& rhs)

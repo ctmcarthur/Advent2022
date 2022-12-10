@@ -4,7 +4,13 @@
 
 //------------------------------------------------------------------------------
 
-using GridOffset = std::pair<int32_t, int32_t>;
+class GridOffset
+{
+public:
+    int32_t dX;
+    int32_t dY;
+};
+
 
 class GridCoordinate
 {

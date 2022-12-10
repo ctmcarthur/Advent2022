@@ -313,3 +313,22 @@ TEST(DayNine, RopeLongContinuousDiagonal)
         EXPECT_EQ(ropeGrid.GetUniqueVisited(), 5);
     }
 }
+
+
+TEST(DayNine, PartTwoExample)
+{
+    using namespace DayNine;
+    RopeGrid ropeGrid(10);
+    ropeGrid.MoveHead(GridDirection::Right, 5);
+    ropeGrid.MoveHead(GridDirection::Up,8);
+    ropeGrid.MoveHead(GridDirection::Left, 8);
+    ropeGrid.MoveHead(GridDirection::Down, 3);
+    ropeGrid.MoveHead(GridDirection::Right, 17);
+    ropeGrid.MoveHead(GridDirection::Down, 10);
+    ropeGrid.MoveHead(GridDirection::Left, 25);
+    ropeGrid.MoveHead(GridDirection::Up, 20);
+
+    EXPECT_EQ(ropeGrid.GetUniqueVisited(), 36);
+
+
+}

@@ -14,86 +14,117 @@ namespace DayNine
       if X or Y is greater than Max units, then subtract 1 from it, then restore its sign (-2->-1,  2->1) on either axis.
     */
 
-  
-    constexpr GridCoordinate kStartLocation = { 0, 0 };
-
+    bool PullTail(const GridCoordinate& headPos, GridCoordinate& tailPos);
     //------------------------------------------------------------------------------
     // Rope Grid
     RopeGrid::RopeGrid()
-        : mHeadPos{kStartLocation}
-        , mTailPos{kStartLocation}
+        : RopeGrid(2)
     {
-        mTailVisited.insert(0);
+    }
+
+
+    constexpr GridCoordinate kStartLocation = { 0, 0 };
+    RopeGrid::RopeGrid(size_t knotCount)
+        : mKnots(knotCount, GridCoordinate{ kStartLocation })
+    {
+        mTailVisited.insert(kStartLocation);
     }
 
     void RopeGrid::MoveHead(GridDirection direction)
     {
-        mHeadPos = ShiftOnGrid(mHeadPos, direction);
+        assert(mKnots.size() > 1);
         
-        PullTail();
+        const auto tailKnot = std::prev(mKnots.end());
+
+
+        auto currentKnot = mKnots.begin();
+
+        (*currentKnot) = ShiftOnGrid(*currentKnot, direction);
+        
+        for (currentKnot; currentKnot != tailKnot; ++currentKnot)
+        {
+            PullTail(*currentKnot, *std::next(currentKnot));
+        }
+            
+        RecordTail(*tailKnot);
+        
     }
 
     void RopeGrid::MoveHead(GridDirection direction, int32_t repeat)
     {
-     //   std::cout << "Move dir: " << static_cast<uint16_t>(direction) << std::endl;
-      //  std::cout << "=================" << std::endl;
         for (int32_t i = 0; i < repeat; ++i)
         {
             MoveHead(direction);
         }
     }
 
-    void RopeGrid::PullTail()
+    //------------------------------------------------------------------------------
+    bool ShouldMove(const GridOffset& absoluteDistance)
     {
-        const GridOffset distance = mHeadPos.Distance(mTailPos);
-        const GridOffset absDistance = { std::abs(distance.first), std::abs(distance.second) };
-
-
-      //  std::cout << "------------" << std::endl;
-       // std::cout << "Head x: " << mHeadPos.x << " Head y: " << mHeadPos.y << std::endl;
-       // std::cout << "Tail x: " << mTailPos.x << " Tail y: " << mTailPos.y << std::endl;
-
-
-        assert(absDistance.first <= (mMaxDistance + 1));
-        assert(absDistance.second <= (mMaxDistance + 1));
-
-
-        GridOffset toMove;
-
-        if (absDistance.first > mMaxDistance)
-        {
-            toMove.first = absDistance.first - mMaxDistance;
-            toMove.second = absDistance.second;
-        }
-        else if (absDistance.second > mMaxDistance)
-        {
-            toMove.first = absDistance.first;
-            toMove.second = absDistance.second - mMaxDistance;
-        }
-        else
-        {
-          //  std::cout << "toMove x: " <<0 << " toMove y: " <<0 << std::endl;
-            return;
-        }
-
-        if (distance.first < 0)
-        {
-            toMove.first *= -1;
-        }
-
-        if (distance.second < 0)
-        {
-            toMove.second *= -1;
-        }
-        
-      //  std::cout << "toMove x: " << toMove.first << " toMove y: " << toMove.second << std::endl;
-        mTailPos = mTailPos + toMove;
-        
-        mTailVisited.insert((mTailPos.y*100000 + mTailPos.x));
-
-      //  std::cout << "Unique Values " << mTailVisited.size() << std::endl;
+        return absoluteDistance.dX > 1 || absoluteDistance.dY > 1;
     }
     
+    //------------------------------------------------------------------------------
+    GridOffset NormalizeOffset(const GridOffset& offset)
+    {
+        GridOffset normalized = { 0,0 };
+
+        if (offset.dX)
+        {
+            if (offset.dX < 0)
+            {
+                normalized.dX = -1;
+            }
+            else
+            {
+                normalized.dX = 1;
+            }
+        }
+
+        if (offset.dY)
+        {
+            if (offset.dY < 0)
+            {
+                normalized.dY = -1;
+            }
+            else
+            {
+                normalized.dY = 1;
+            }
+        }
+
+        return normalized;
+    }
+
+//------------------------------------------------------------------------------
+    bool PullTail(const GridCoordinate& headPos, GridCoordinate& tailPos)
+    {
+        const GridOffset distance = headPos.Distance(tailPos);
+        const GridOffset absDistance = { std::abs(distance.dX), std::abs(distance.dY) };
+
+        assert(absDistance.dX <= 2);
+        assert(absDistance.dY <= 2);
+
+
+        if (!ShouldMove(absDistance))
+        {
+            return false;
+        }
+      
+        const GridOffset moveDirection = NormalizeOffset(distance);
+        
+        tailPos.x += moveDirection.dX;
+        tailPos.y += moveDirection.dY;
+     return true;
+    }
+
+    //------------------------------------------------------------------------------
+    void RopeGrid::RecordTail(const GridCoordinate& tailPos)
+    {
+        mTailVisited.insert(tailPos);
+    }
+
+    //------------------------------------------------------------------------------
     static const std::unordered_map<char, GridDirection> kInputDirMap =
     {
         {'L', GridDirection::Left},
@@ -102,21 +133,28 @@ namespace DayNine
         {'D', GridDirection::Down}
     };
 
-    static constexpr size_t kInputDirIdx = 0;
-    static constexpr size_t kInputCountIdx = 2;
+   
     //------------------------------------------------------------------------------
-    // Part One
-    std::any DoPartOne(const std::string& filename)
+    // Parsing
+    void ParseInput(const std::string& filename, RopeGrid& outRopeGrid)
     {
-        RopeGrid ropeGrid;
+        static constexpr size_t kInputDirIdx = 0;
+        static constexpr size_t kInputCountIdx = 2;
 
         const auto input = StringUtils::SplitFile(filename);
         for (const auto& line : input)
         {
             const char dirChar = line.at(kInputDirIdx);
-            const char countChar = line.at(kInputCountIdx);
-            ropeGrid.MoveHead(kInputDirMap.at(dirChar), std::stoi(std::string(1, countChar)));
+            const uint32_t count = std::stoi(line.substr(kInputCountIdx));
+            outRopeGrid.MoveHead(kInputDirMap.at(dirChar), count);
         }
+    }
+    //------------------------------------------------------------------------------
+    // Part One
+    std::any DoPartOne(const std::string& filename)
+    {
+        RopeGrid ropeGrid;
+        ParseInput(filename, ropeGrid);
 
         const auto numVisited = ropeGrid.GetUniqueVisited();
         std::cout << "Number of Locations Visited is: " << numVisited << std::endl;
@@ -128,8 +166,12 @@ namespace DayNine
     // Part Two
     std::any DoPartTwo(const std::string& filename)
     {
-        (void)filename;
-        std::cout << "The Answer is: " << std::endl;
-        return {};
+        RopeGrid ropeGrid(10);
+        ParseInput(filename, ropeGrid);
+
+        const auto numVisited = ropeGrid.GetUniqueVisited();
+        std::cout << "Number of Locations Visited by Tail is: " << numVisited << std::endl;
+
+        return numVisited;
     }
 }
