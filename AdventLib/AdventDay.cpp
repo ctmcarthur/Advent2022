@@ -3,8 +3,8 @@
 
 //------------------------------------------------------------------------------
 AdventDay::AdventDay(DayId day, YearId year, std::pair<PuzzleFunc, PuzzleFunc> solutions)
-    : mYear(year)
-    , mDay(day)
+    : mDay(day)
+    , mYear(year)
     , mPartOneFunc(std::move(solutions.first))
     , mPartTwoFunc(std::move(solutions.second))
 {

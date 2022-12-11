@@ -31,7 +31,7 @@ namespace DayEleven2022
 
     class Monkey;
 
-    using WorryVal = int64_t;
+    using WorryVal = uint64_t;
     using MonkeyId = size_t;
 
     class MonkeyGang
