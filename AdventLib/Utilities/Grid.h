@@ -22,11 +22,29 @@ public:
     int32_t y = 0;
 };
 
-IMPLEMENT_STD_HASH(GridCoordinate, value.x, value.y);
+template<typename T>
+void BoostHash(size_t& seed, const T& value)
+{
+    std::hash<T> hasher;
+    seed ^= hasher(value) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+}
+
+namespace std
+{
+    template<>
+    struct hash<GridCoordinate>
+    {
+        size_t operator()(const GridCoordinate& value) const
+        {
+            unsigned long long result = 0ull; 
+            BoostHash(result, value.x);
+            BoostHash(result, value.y);
+            return result;
+        }
+    };
+}
 
 GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs);
-
-//GridCoordinate operator+(const GridCoordinate& lhs, const GridCoordinate& rhs);
 
 //------------------------------------------------------------------------------
 template<class T>

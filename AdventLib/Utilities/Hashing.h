@@ -1,5 +1,6 @@
 #pragma once
 
+// borrowed without Permission from Marcus Reid- 
 namespace Hashing
 {
     // Creates a new hash by hashing the provided values. Algorithm taken from Boost's hash_combine function.

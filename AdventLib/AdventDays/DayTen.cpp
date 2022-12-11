@@ -13,37 +13,27 @@
 namespace DayTen2022
 {
     
-
-    //------------------------------------------------------------------------------
+    // crt impl
     CRT::CRT()
     {
-
+        mCycles.push_back(1);
     }
 
-    //------------------------------------------------------------------------------
     void CRT::PushNoop()
     {
         ++mCurrentCycle;
         FillToCycle(mCurrentCycle);
     }
     
-    //------------------------------------------------------------------------------
     void CRT::PushAdd(int32_t amt)
     {
-        static constexpr uint32_t kAddCycles = 2;
-        mCurrentCycle += kAddCycles;
+        mCurrentCycle += 2;
         FillToCycle(mCurrentCycle);
         mCycles.back() += amt;
     }
 
-    //------------------------------------------------------------------------------
     void CRT::FillToCycle(uint32_t newCycle)
     {
-        if (mCycles.empty())
-        {
-            mCycles.push_back(1);
-        }
-
         const auto fillVal = mCycles.back();
         while (mCycles.size() <= newCycle)
         {
@@ -51,24 +41,10 @@ namespace DayTen2022
         }
     }
 
-    //------------------------------------------------------------------------------
-    int32_t CRT::GetValue(uint32_t cycleIdx) const
-    {
-        if (cycleIdx >= mCycles.size())
-        {
-            return mCycles.back();
-        }
-
-        return mCycles.at(cycleIdx);
-    }
-
-    
-    //------------------------------------------------------------------------------
     // parsing
     void ParseInstruction(const std::string& line, CRT &crt)
     {
         static constexpr char kNoopChar = 'n';
-        static constexpr char kAddChar = 'a';
         static constexpr size_t kAddValIdx = 5;
 
         if (line.at(0) == kNoopChar)
@@ -81,11 +57,9 @@ namespace DayTen2022
         crt.PushAdd(addVal);
     }
 
-    //------------------------------------------------------------------------------
     PuzzleSolution DoPartOne(const std::filesystem::path& filename)
     {
         CRT crt;
-
         const auto input = StringUtils::SplitFile(filename);
 
         for (const auto& line : input)
@@ -94,12 +68,12 @@ namespace DayTen2022
         }
 
         //calc strength
-        static constexpr std::array<uint32_t, 6> kSignals({20, 60, 100, 140, 180, 220});
+        static constexpr std::array<uint32_t, 6> kSignals{20, 60, 100, 140, 180, 220};
 
         uint32_t signalSum = 0;
         for (auto signalIdx : kSignals)
         {
-            signalSum += signalIdx * crt.GetValue(signalIdx);
+            signalSum += signalIdx * crt.GetCycles().at(signalIdx);
         }
         std::cout << "The Signal Strength Sum is: " << signalSum << std::endl;
 
@@ -126,15 +100,7 @@ namespace DayTen2022
             for (auto pixel : crtLine)
             {
                 // are we within 1?
-                if (std::abs(pixel - drawPos) <= 1)
-                {
-                    std::cout << "#";
-                }
-                else
-                {
-                    std::cout << ".";
-                }
-
+                std::cout << ((std::abs(pixel - drawPos) <= 1) ? '#' : '.');
                 ++drawPos;
             }
             std::cout << std::endl;

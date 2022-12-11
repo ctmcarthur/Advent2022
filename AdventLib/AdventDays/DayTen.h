@@ -8,7 +8,6 @@ namespace DayTen2022
         CRT();
         void PushNoop();
         void PushAdd(int32_t amt);
-        int32_t GetValue(uint32_t cycleIdx) const;
         const std::vector<int32_t>& GetCycles() const { return mCycles; }
 
     private:
