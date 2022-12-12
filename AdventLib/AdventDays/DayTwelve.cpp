@@ -87,6 +87,7 @@ namespace DayTwelve2022
         {
         public:
             bool mSeen = false;
+            bool mAdded = false;
             uint32_t mDistance = 0;
         };
 
@@ -148,11 +149,12 @@ namespace DayTwelve2022
         {
             SearchData& searchData = mVisited.at(adjNode->mLocation);
 
-            if (searchData.mSeen)
+            if (searchData.mSeen || searchData.mAdded)
             {
                 continue;
             }
 
+            searchData.mAdded = true;
             searchData.mDistance = nextDistance;
             nodeQueue.push(adjNode);
         }
