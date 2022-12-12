@@ -190,6 +190,7 @@
     <ClCompile Include="AdventDays\DaySix.cpp" />
     <ClCompile Include="AdventDays\DayTen.cpp" />
     <ClCompile Include="AdventDays\DayThree.cpp" />
+    <ClCompile Include="AdventDays\DayTwelve.cpp" />
     <ClCompile Include="AdventDays\DayTwo.cpp" />
     <ClCompile Include="AdventLib.cpp" />
     <ClCompile Include="pch.cpp">

@@ -133,5 +133,6 @@ enum class GridDirection : uint16_t
     Last = Down
 };
 
+std::optional<GridCoordinate> TryShiftOnGrid(GridCoordinate pos, GridDirection dir, size_t width, size_t height);
 GridCoordinate ShiftOnGrid(GridCoordinate pos, GridDirection dir);
 std::ostream& operator<< (std::ostream& out, GridDirection dataSrc);

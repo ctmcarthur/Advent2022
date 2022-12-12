@@ -39,6 +39,22 @@ namespace
 
 
 //------------------------------------------------------------------------------
+std::optional<GridCoordinate> TryShiftOnGrid(GridCoordinate pos, GridDirection dir, size_t width, size_t height)
+{
+    const GridCoordinate ret = ShiftOnGrid(pos, dir);
+
+    if ((pos.x < 0) ||
+        (pos.y < 0) ||
+        (pos.x > width) ||
+        (pos.y > height))
+    {
+        return {};
+    }
+
+    return ret;
+}
+
+//------------------------------------------------------------------------------
 GridCoordinate ShiftOnGrid(GridCoordinate pos, GridDirection dir)
 {     
     const auto& offset = kDirectionOffsets[dir];
