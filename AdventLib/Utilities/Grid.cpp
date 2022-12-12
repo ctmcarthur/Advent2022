@@ -43,10 +43,10 @@ std::optional<GridCoordinate> TryShiftOnGrid(GridCoordinate pos, GridDirection d
 {
     const GridCoordinate ret = ShiftOnGrid(pos, dir);
 
-    if ((pos.x < 0) ||
-        (pos.y < 0) ||
-        (pos.x > width) ||
-        (pos.y > height))
+    if ((ret.x < 0) ||
+        (ret.y < 0) ||
+        (ret.x >= width) ||
+        (ret.y >= height))
     {
         return {};
     }

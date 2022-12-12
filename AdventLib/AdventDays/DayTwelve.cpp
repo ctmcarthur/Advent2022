@@ -18,25 +18,26 @@ namespace DayTwelve2022
         GridCoordinate mLocation;
     }; 
     
-    using AdjacenyFunc = std::function<void(Node&, const Node&)>;
+    using AdjacenyFunc = std::function<bool(const Node& start, const Node& end)>;
 
 
     class HeightMap
     {
     public:
         HeightMap(size_t width, size_t height);
+
         Node& GetNode(GridCoordinate location);
         uint32_t FindDistance(const Node& startNode, const Node& endNode);
         void GenerateAdjacencies(AdjacenyFunc adjacencyFunc);
-
+       
         Grid<Node> mNodes;
         GridCoordinate mStartIdx;
         GridCoordinate mEndIdx;
 
     private:
         void GenerateDirectionAdjacency(Node& node, AdjacenyFunc adjacencyFunc, GridDirection direction);
-        bool DepthFirstSearch(const Node& currentNode, const Node& endNode, Grid<uint32_t>& distances);
     };
+
 
     HeightMap::HeightMap(size_t width, size_t height)
         : mNodes(width, height)
@@ -65,17 +66,15 @@ namespace DayTwelve2022
     {
         if (auto neighborCoord = TryShiftOnGrid(node.mLocation, direction, mNodes.GetWidth(), mNodes.GetHeight()))
         {
-            adjacencyFunc(node, mNodes.at(*neighborCoord));
+            auto& nextNode = mNodes.at(*neighborCoord);
+            if (adjacencyFunc(node, nextNode))
+            {
+                node.mAdj.push_back(&nextNode);
+            }
         }
     }
 
-    class SearchData
-    {
-    public:
-        bool mSeen = false;
-        uint32_t mDistance = 0;
-    };
-
+    
     class BreadthFirstDistance
     {
     public:
@@ -83,7 +82,17 @@ namespace DayTwelve2022
         uint32_t FindDistance(const Node& startNode, const Node& goalNode);
 
     private:
-        bool Search(const Node& currentNode);
+
+        class SearchData
+        {
+        public:
+            bool mSeen = false;
+            uint32_t mDistance = 0;
+        };
+
+        void AddAdjacents(const Node& currNode, std::queue<const Node*>& nodeQueue);
+        bool Visit(const Node& currNode);
+
         const Grid<Node>& mGrid;
         Grid<SearchData> mVisited;
         const Node* mGoal = nullptr;
@@ -100,29 +109,39 @@ namespace DayTwelve2022
     uint32_t BreadthFirstDistance::FindDistance(const Node& startNode, const Node & goalNode)
     {
         mGoal = &goalNode;
-        Search(startNode);
 
         std::queue<const Node*> nodeQueue; 
         nodeQueue.push(&startNode);
 
-        while (nodeQueue.empty())
+        while (!nodeQueue.empty())
         {
             const Node& currNode = *nodeQueue.front();
             if (Visit(currNode))
             {
+                // go to the end
                 break;
             }
 
             AddAdjacents(currNode, nodeQueue);
+            nodeQueue.pop();
         }
 
         return mVisited.at(goalNode.mLocation).mDistance;
 
     }
 
-    void BreadthFirstDistance::AddAdjacents(const Node& currNode, std::queue<const Node*> nodeQueue)
+    bool BreadthFirstDistance::Visit(const Node& currNode)
     {
-        const auto nextDistance = mVisited.at(currNode.mLocation).mDistance;
+        SearchData& searchData = mVisited.at(currNode.mLocation);
+
+        searchData.mSeen = true;
+
+        return &currNode == mGoal;
+    }
+
+    void BreadthFirstDistance::AddAdjacents(const Node& currNode, std::queue<const Node*>& nodeQueue)
+    {
+        const auto nextDistance = mVisited.at(currNode.mLocation).mDistance + 1;
 
         // add adjacents
         for (const auto* const adjNode : currNode.mAdj)
@@ -138,62 +157,70 @@ namespace DayTwelve2022
             nodeQueue.push(adjNode);
         }
     }
-    bool BreadthFirstDistance::Search(const Node& currentNode)
-    {
-        const auto& currentDistance = mVisited.at(currentNode.mLocation).mDistance;
-
-        std::queue<Node> adjNodes;
-
-        for 
-
-    }
 
     uint32_t HeightMap::FindDistance(const Node& startNode, const Node& endNode)
     {
-        // Depth First Search
-        Grid<uint32_t> distances(mNodes.GetWidth(), mNodes.GetHeight());
-        distances.at(startNode.mLocation) = 0;
-        DepthFirstSearch(startNode, endNode, distances);
-
-        return distances.at(mEndIdx);
+        BreadthFirstDistance findAlg(mNodes);
+        return findAlg.FindDistance(startNode, endNode);
     }
 
-    bool HeightMap::DepthFirstSearch(const Node& currentNode, const Node& endNode, Grid<uint32_t>& distances)
-    {  
-        const auto& currentDistance = distances.at(currentNode.mLocation);
+    bool TestIsAdjacent(const Node& start, const Node& end)
+    {
+        return (end.mHeight == 0) || (start.mHeight >= (end.mHeight - 1));
+    }
 
-        for (const auto* const adjNode : currentNode.mAdj)
-        {
-            distances.at(adjNode->mLocation) = currentDistance + 1;
-            if (adjNode == &endNode)
-            {
-                // found the end! 
-                return true;
-            }
+    //------------------------------------------------------------------------------
+    // parsing
+    HeightMap ParseHeightMap(const std::filesystem::path& filename)
+    {
+        static constexpr char kStartChar = 'S';
+        static constexpr char kEndChar = 'E';
 
-            if (DepthFirstSearch(*adjNode, endNode, distances))
+        const auto input = StringUtils::SplitFile(filename);
+        assert(!input.empty());
+        
+        const size_t maxWidth = input.at(0).size();
+        const size_t mapHeight = input.size();
+
+        HeightMap heightMap(maxWidth, mapHeight);
+        
+        for (size_t x = 0; x < maxWidth; ++x)
+        {   
+            for (size_t y = 0; y < mapHeight; ++y)
             {
-                // stop calculating if end was found.
-                return true;
+                const GridCoordinate coord{ static_cast<int32_t>(x), static_cast<int32_t>(y) };
+                auto& node = heightMap.GetNode(coord);
+                char height = input[y][x];
+
+                if (height == kStartChar)
+                {
+                    height = 'a';
+                    heightMap.mStartIdx = coord;
+                }
+                else if (height == kEndChar)
+                {
+                    height = 'z';
+                    heightMap.mEndIdx = coord;
+                }
+
+                node.mLocation = coord;
+                node.mHeight = height - 'a';
             }
         }
 
-        return false;
+        heightMap.GenerateAdjacencies(&TestIsAdjacent);
+        return heightMap;
     }
-
 
     //------------------------------------------------------------------------------
     // Part One
     PuzzleSolution DoPartOne(const std::filesystem::path & filename)
     {
-        const auto input = StringUtils::SplitFile(filename);
+       
+        HeightMap heightMap = ParseHeightMap(filename);
 
-        for (const auto& line : input)
-        {
-            (void)line;
-        }
-
-        const uint32_t retVal = 0;
+        const uint32_t retVal = heightMap.FindDistance(heightMap.GetNode(heightMap.mStartIdx),
+            heightMap.GetNode(heightMap.mEndIdx));
 
         std::cout << "The Answer is: " << retVal << std::endl;
 

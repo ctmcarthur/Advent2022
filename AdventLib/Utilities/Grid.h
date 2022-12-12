@@ -69,9 +69,11 @@ public:
 
     }
 
+    Grid(Grid&& rhs) = default;
+
     //------------------------------------------------------------------------------
     [[nodiscard]] size_t GetWidth() const { return mWidth; }
-    [[nodiscard]] size_t GetHeight() const { return mWidth; }
+    [[nodiscard]] size_t GetHeight() const { return mHeight; }
 
     //------------------------------------------------------------------------------
     [[nodiscard]] T& at(GridCoordinate location)
