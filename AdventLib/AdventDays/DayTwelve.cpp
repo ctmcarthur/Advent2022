@@ -19,7 +19,7 @@ namespace DayTwelve2022
     }; 
     
     using AdjacenyFunc = std::function<bool(const Node& start, const Node& end)>;
-
+    using GoalFunc = std::function<bool(const Node& testNode)>;
 
     class HeightMap
     {
@@ -27,7 +27,7 @@ namespace DayTwelve2022
         HeightMap(size_t width, size_t height);
 
         Node& GetNode(GridCoordinate location);
-        uint32_t FindDistance(const Node& startNode, const Node& endNode);
+        uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
         void GenerateAdjacencies(AdjacenyFunc adjacencyFunc);
        
         Grid<Node> mNodes;
@@ -79,7 +79,7 @@ namespace DayTwelve2022
     {
     public:
         explicit BreadthFirstDistance(const Grid<Node>& grid);
-        uint32_t FindDistance(const Node& startNode, const Node& goalNode);
+        uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
 
     private:
 
@@ -96,7 +96,7 @@ namespace DayTwelve2022
 
         const Grid<Node>& mGrid;
         Grid<SearchData> mVisited;
-        const Node* mGoal = nullptr;
+        GoalFunc mGoalFunc;
 
     };
 
@@ -107,18 +107,21 @@ namespace DayTwelve2022
 
     }
 
-    uint32_t BreadthFirstDistance::FindDistance(const Node& startNode, const Node & goalNode)
+    uint32_t BreadthFirstDistance::FindDistance(const Node& startNode, GoalFunc goalFunc)
     {
-        mGoal = &goalNode;
+        mGoalFunc = goalFunc;
 
         std::queue<const Node*> nodeQueue; 
         nodeQueue.push(&startNode);
+
+        const Node* goalNode = nullptr;
 
         while (!nodeQueue.empty())
         {
             const Node& currNode = *nodeQueue.front();
             if (Visit(currNode))
             {
+                goalNode = &currNode;
                 // go to the end
                 break;
             }
@@ -127,7 +130,9 @@ namespace DayTwelve2022
             nodeQueue.pop();
         }
 
-        return mVisited.at(goalNode.mLocation).mDistance;
+        assert(goalNode != nullptr);
+
+        return mVisited.at(goalNode->mLocation).mDistance;
 
     }
 
@@ -137,7 +142,7 @@ namespace DayTwelve2022
 
         searchData.mSeen = true;
 
-        return &currNode == mGoal;
+        return mGoalFunc(currNode);
     }
 
     void BreadthFirstDistance::AddAdjacents(const Node& currNode, std::queue<const Node*>& nodeQueue)
@@ -160,15 +165,20 @@ namespace DayTwelve2022
         }
     }
 
-    uint32_t HeightMap::FindDistance(const Node& startNode, const Node& endNode)
+    uint32_t HeightMap::FindDistance(const Node& startNode, GoalFunc goalFunc)
     {
         BreadthFirstDistance findAlg(mNodes);
-        return findAlg.FindDistance(startNode, endNode);
+        return findAlg.FindDistance(startNode, goalFunc);
     }
 
     bool TestIsAdjacent(const Node& start, const Node& end)
     {
         return (end.mHeight == 0) || (start.mHeight >= (end.mHeight - 1));
+    }
+
+    bool TestGoingDownhill(const Node& start, const Node& end)
+    {
+        return start.mHeight <= (end.mHeight + 1);
     }
 
     //------------------------------------------------------------------------------
@@ -210,7 +220,6 @@ namespace DayTwelve2022
             }
         }
 
-        heightMap.GenerateAdjacencies(&TestIsAdjacent);
         return heightMap;
     }
 
@@ -220,30 +229,33 @@ namespace DayTwelve2022
     {
        
         HeightMap heightMap = ParseHeightMap(filename);
+        heightMap.GenerateAdjacencies(&TestIsAdjacent);
 
-        const uint32_t retVal = heightMap.FindDistance(heightMap.GetNode(heightMap.mStartIdx),
-            heightMap.GetNode(heightMap.mEndIdx));
+        const Node* const goalNode = &heightMap.GetNode(heightMap.mEndIdx);
+        auto findGoal = [goalNode](const Node& testNode) -> bool
+            {return &testNode == goalNode; };
 
-        std::cout << "The Answer is: " << retVal << std::endl;
+        const uint32_t pathLength = heightMap.FindDistance(heightMap.GetNode(heightMap.mStartIdx), findGoal);
 
-        return { {retVal}, {&CompareAny<uint32_t>} };
+        std::cout << "Fastest Path to top of the mountain is:  " << pathLength << " Steps." << std::endl;
+
+        return { {pathLength}, {&CompareAny<uint32_t>} };
     }
 
     //------------------------------------------------------------------------------
    // Part Two
     PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
-        const auto input = StringUtils::SplitFile(filename);
+        HeightMap heightMap = ParseHeightMap(filename);
+        heightMap.GenerateAdjacencies(&TestGoingDownhill);
 
-        for (const auto& line : input)
-        {
-            (void)line;
-        }
+        constexpr auto findGoal = [](const Node& testNode) -> bool
+        {return testNode.mHeight == 0; };
 
-        const uint32_t retVal = 0;
+        const uint32_t pathLength = heightMap.FindDistance(heightMap.GetNode(heightMap.mEndIdx), findGoal);
 
-        std::cout << "The Answer is: " << retVal << std::endl;
+        std::cout << "Fastest Path to bottom of the mountain is:  " << pathLength << " Steps." << std::endl;
 
-        return { {retVal}, {&CompareAny<uint32_t>} };
+        return { {pathLength}, {&CompareAny<uint32_t>} };
     }
 }
