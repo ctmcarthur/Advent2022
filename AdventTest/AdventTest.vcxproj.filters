@@ -24,6 +24,9 @@
     <ClCompile Include="TestDay10.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="TestDayThirteen.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

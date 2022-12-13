@@ -17,7 +17,11 @@ namespace StringUtils
         for (const auto& word : std::views::split(input, delimiter))
         {
             std::string newVal = std::string(word.begin(), word.end());
-            ret.emplace_back(transform(newVal));
+
+            if (!newVal.empty())
+            {
+                ret.emplace_back(transform(newVal));
+            }
         }
 
         return ret;

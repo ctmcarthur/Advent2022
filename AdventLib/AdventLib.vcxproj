@@ -170,6 +170,7 @@
     <ClInclude Include="AdventDays\DaySeven.h" />
     <ClInclude Include="AdventDays\DaySix.h" />
     <ClInclude Include="AdventDays\DayTen.h" />
+    <ClInclude Include="AdventDays\DayThirteen.h" />
     <ClInclude Include="AdventLib.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Utilities\EnumArray.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="AdventDays\DaySeven.cpp" />
     <ClCompile Include="AdventDays\DaySix.cpp" />
     <ClCompile Include="AdventDays\DayTen.cpp" />
+    <ClCompile Include="AdventDays\DayThirteen.cpp" />
     <ClCompile Include="AdventDays\DayThree.cpp" />
     <ClCompile Include="AdventDays\DayTwelve.cpp" />
     <ClCompile Include="AdventDays\DayTwo.cpp" />

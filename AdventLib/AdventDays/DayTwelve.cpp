@@ -8,8 +8,6 @@
 
 namespace DayTwelve2022
 {
-
-    
     class Node
     {
     public:
@@ -38,6 +36,30 @@ namespace DayTwelve2022
         void GenerateDirectionAdjacency(Node& node, AdjacenyFunc adjacencyFunc, GridDirection direction);
     };
 
+    class BreadthFirstDistance
+    {
+    public:
+        explicit BreadthFirstDistance(const Grid<Node>& grid);
+        uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
+
+    private:
+
+        class SearchData
+        {
+        public:
+            bool mSeen = false;
+            bool mAdded = false;
+            uint32_t mDistance = 0;
+        };
+
+        void AddAdjacents(const Node& currNode, std::queue<const Node*>& nodeQueue);
+        bool Visit(const Node& currNode);
+
+        const Grid<Node>& mGrid;
+        Grid<SearchData> mVisited;
+        GoalFunc mGoalFunc;
+
+    };
 
     HeightMap::HeightMap(size_t width, size_t height)
         : mNodes(width, height)
@@ -74,32 +96,13 @@ namespace DayTwelve2022
         }
     }
 
-    
-    class BreadthFirstDistance
+    uint32_t HeightMap::FindDistance(const Node& startNode, GoalFunc goalFunc)
     {
-    public:
-        explicit BreadthFirstDistance(const Grid<Node>& grid);
-        uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
+        BreadthFirstDistance findAlg(mNodes);
+        return findAlg.FindDistance(startNode, goalFunc);
+    }
 
-    private:
-
-        class SearchData
-        {
-        public:
-            bool mSeen = false;
-            bool mAdded = false;
-            uint32_t mDistance = 0;
-        };
-
-        void AddAdjacents(const Node& currNode, std::queue<const Node*>& nodeQueue);
-        bool Visit(const Node& currNode);
-
-        const Grid<Node>& mGrid;
-        Grid<SearchData> mVisited;
-        GoalFunc mGoalFunc;
-
-    };
-
+    //------------------------------------------------------------------------------
     BreadthFirstDistance::BreadthFirstDistance(const Grid<Node>& grid)
         : mGrid(grid)
         , mVisited(grid.GetWidth(), grid.GetHeight())
@@ -111,7 +114,7 @@ namespace DayTwelve2022
     {
         mGoalFunc = goalFunc;
 
-        std::queue<const Node*> nodeQueue; 
+        std::queue<const Node*> nodeQueue;
         nodeQueue.push(&startNode);
 
         const Node* goalNode = nullptr;
@@ -163,12 +166,6 @@ namespace DayTwelve2022
             searchData.mDistance = nextDistance;
             nodeQueue.push(adjNode);
         }
-    }
-
-    uint32_t HeightMap::FindDistance(const Node& startNode, GoalFunc goalFunc)
-    {
-        BreadthFirstDistance findAlg(mNodes);
-        return findAlg.FindDistance(startNode, goalFunc);
     }
 
     bool TestIsAdjacent(const Node& start, const Node& end)
