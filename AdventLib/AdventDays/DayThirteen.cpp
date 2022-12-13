@@ -129,6 +129,7 @@ namespace DayThirteen2022
     {
     public:
         size_t SumCorrectPairs() const;
+        size_t CountPairsLessThan(const PacketData& comparePacket) const;
         std::vector<std::pair<PacketData, PacketData>> mPackets;
     };
 
@@ -148,6 +149,26 @@ namespace DayThirteen2022
         }
 
         return resultSum;
+    }
+
+    size_t PacketReader::CountPairsLessThan(const PacketData& comparePacket) const
+    {
+        size_t currentCount = 0;
+        for (const auto& [firstPacket, secondPacket] : mPackets)
+        {
+            if (ComparePackets(firstPacket, comparePacket) == CompareResult::Right)
+            {
+                ++currentCount;
+            }
+
+            if (ComparePackets(secondPacket, comparePacket) == CompareResult::Right)
+            {
+                ++currentCount;
+            }
+        }
+
+
+        return currentCount;
     }
 
     size_t ParsePacketRecurse(PacketData &packet, const std::string& line, size_t startIdx)
@@ -229,15 +250,27 @@ namespace DayThirteen2022
     // Part Two
     PuzzleSolution DoPartTwo(const std::filesystem::path& filename)
     {
-        const auto input = StringUtils::SplitFile(filename);
+        PacketReader packetReader = ParsePackets(filename);
+        
+        PacketData packet2; // build packet [[2]]
+        {
+            PacketData innerPacket(PacketData(2));
+            packet2.AddPacket(innerPacket);
+        }
 
-        (void)input;
+        PacketData packet6; // build packet [[6]] 
+        {
+            PacketData innerPacket(PacketData(6));
+            packet6.AddPacket(innerPacket);
+        }
 
-        const uint32_t retVal = 0;
+        const size_t packet2Idx = packetReader.CountPairsLessThan(packet2) + 1;
+        const size_t packet6Idx = packetReader.CountPairsLessThan(packet6) + 2; // elf indicing + packet 2
+        const size_t decorderKey = packet2Idx * packet6Idx;
 
-        std::cout << "The Answer Is: " << retVal << "\n";
+        std::cout << "The Decoder Key IS: " << decorderKey << "\n";
 
-        return { {retVal}, {&CompareAny<uint32_t>} };
+        return { {decorderKey}, {&CompareAny<size_t>} };
 
     }
 }
