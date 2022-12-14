@@ -12,14 +12,46 @@ bool GridCoordinate::operator==(const GridCoordinate& rhs) const
     return x == rhs.x && y == rhs.y;
 }
 
-GridOffset GridCoordinate::Distance(GridCoordinate& rhs) const
+GridOffset GridCoordinate::Distance(const GridCoordinate& rhs) const
 {
     return { static_cast<int32_t>(x - rhs.x), static_cast<int32_t>(y - rhs.y)};
 }
 
-GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs)
+constexpr GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs)
 {
     return { lhs.x + rhs.dX, lhs.y + rhs.dY };
+}
+
+//------------------------------------------------------------------------------
+GridOffset NormalizeOffset(const GridOffset& offset)
+{
+    GridOffset normalized = { 0,0 };
+
+    if (offset.dX != 0)
+    {
+        if (offset.dX < 0)
+        {
+            normalized.dX = -1;
+        }
+        else
+        {
+            normalized.dX = 1;
+        }
+    }
+
+    if (offset.dY != 0)
+    {
+        if (offset.dY < 0)
+        {
+            normalized.dY = -1;
+        }
+        else
+        {
+            normalized.dY = 1;
+        }
+    }
+
+    return normalized;
 }
 
 //------------------------------------------------------------------------------

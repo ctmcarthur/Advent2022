@@ -16,11 +16,16 @@ class GridCoordinate
 {
 public:
     bool operator==(const GridCoordinate& rhs) const;
-    GridOffset Distance(GridCoordinate& rhs) const;
+    GridOffset Distance(const GridCoordinate& rhs) const;
 
     int32_t x = 0;
     int32_t y = 0;
 };
+
+
+constexpr GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs);
+GridOffset NormalizeOffset(const GridOffset& offset); // turns an offset into a direction
+
 
 template<typename T>
 void BoostHash(size_t& seed, const T& value)
@@ -44,8 +49,6 @@ namespace std
     };
 }
 
-GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs);
-
 //------------------------------------------------------------------------------
 template<class T>
 class Grid
@@ -64,7 +67,7 @@ public:
     Grid(size_t width, size_t height, const T& defaultValue)
         : mWidth(width)
         , mHeight(height)
-        , mGrid(width*height)
+        , mGrid(width*height, defaultValue)
     {
 
     }

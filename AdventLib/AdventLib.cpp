@@ -30,7 +30,7 @@ FWD_DECLARE_DAY(DayTen2022);
 FWD_DECLARE_DAY(DayEleven2022);
 FWD_DECLARE_DAY(DayTwelve2022);
 FWD_DECLARE_DAY(DayThirteen2022);
-// FWD_DECLARE_DAY(DayFourteen2022);
+FWD_DECLARE_DAY(DayFourteen2022);
 // FWD_DECLARE_DAY(DayFifteen2022);
 // FWD_DECLARE_DAY(DaySixteen2022);
 // FWD_DECLARE_DAY(DaySeventeen2022);
@@ -61,7 +61,7 @@ namespace Year2022
         REGISTER_DAY(DayEleven2022, 11, 2022);
         REGISTER_DAY(DayTwelve2022, 12, 2022);
         REGISTER_DAY(DayThirteen2022, 13, 2022);
-//         REGISTER_DAY(DayFourteen2022, 14, 2022);
+        REGISTER_DAY(DayFourteen2022, 14, 2022);
 //         REGISTER_DAY(DayFifteen2022, 15, 2022);
 //         REGISTER_DAY(DaySixteen2022, 16, 2022);
 //         REGISTER_DAY(DaySeventeen2022, 17, 2022);

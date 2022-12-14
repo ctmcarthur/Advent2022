@@ -75,38 +75,6 @@ namespace DayNine2022
     }
 
     //------------------------------------------------------------------------------
-    GridOffset NormalizeOffset(const GridOffset& offset)
-    {
-        GridOffset normalized = { 0,0 };
-
-        if (offset.dX != 0)
-        {
-            if (offset.dX < 0)
-            {
-                normalized.dX = -1;
-            }
-            else
-            {
-                normalized.dX = 1;
-            }
-        }
-
-        if (offset.dY != 0)
-        {
-            if (offset.dY < 0)
-            {
-                normalized.dY = -1;
-            }
-            else
-            {
-                normalized.dY = 1;
-            }
-        }
-
-        return normalized;
-    }
-
-    //------------------------------------------------------------------------------
     bool PullTail(const GridCoordinate& headPos, GridCoordinate& tailPos)
     {
         const GridOffset distance = headPos.Distance(tailPos);

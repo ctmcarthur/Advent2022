@@ -165,6 +165,7 @@
     <ClInclude Include="AdventDays\DayEight.h" />
     <ClInclude Include="AdventDays\DayEleven.h" />
     <ClInclude Include="AdventDays\DayFive.h" />
+    <ClInclude Include="AdventDays\DayFourteen.h" />
     <ClInclude Include="AdventDays\DayNine.h" />
     <ClInclude Include="AdventDays\DayOne.h" />
     <ClInclude Include="AdventDays\DaySeven.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="AdventDays\DayEleven.cpp" />
     <ClCompile Include="AdventDays\DayFive.cpp" />
     <ClCompile Include="AdventDays\DayFour.cpp" />
+    <ClCompile Include="AdventDays\DayFourteen.cpp" />
     <ClCompile Include="AdventDays\DayNine.cpp" />
     <ClCompile Include="AdventDays\DayOne.cpp" />
     <ClCompile Include="AdventDays\DaySeven.cpp" />
