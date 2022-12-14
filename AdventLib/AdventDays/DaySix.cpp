@@ -39,11 +39,11 @@ namespace DaySix2022
         assert(keySize > 0 && input.size() >= keySize);
 
         const auto endIter = input.end();
-        for (auto iter = std::next(input.begin(), keySize); 
+        for (auto iter = std::next(input.begin(), static_cast<int64_t>(keySize)); 
             iter != endIter; 
             ++iter)
         {
-            auto keyStart = std::prev(iter, keySize);
+            auto keyStart = std::prev(iter, static_cast<int64_t>(keySize));
             if (AllCharactersUnique({ keyStart.operator->(), keySize }))
             {
                 return std::distance(input.begin(), iter);

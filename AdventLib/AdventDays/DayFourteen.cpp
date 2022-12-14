@@ -12,7 +12,6 @@ namespace DayFourteen2022
 
     static constexpr size_t kGridWidth = 1000;
     static constexpr size_t kGridHeight = 400;
-    static constexpr GridOffset kRockXOffset = { 0, 0 };
     static constexpr GridCoordinate kSandSource = { 500, 0 };
 
     enum class CellContents : uint32_t
@@ -32,75 +31,39 @@ namespace DayFourteen2022
     class Cavern
     {
     public:
-        Cavern();
+        Cavern() : mGrid(kGridWidth, kGridHeight, CellContents::Empty) {}
         void AddRock(const std::vector<GridCoordinate>& rock);
-        void Print() const;
         SimulateResult SimulateSand();
-        int32_t GetLowestPoint() const { return mLowestPoint; }
+        [[nodiscard]] int32_t GetLowestPoint() const { return mLowestPoint; }
 
     private:
         void FillAllPieces(const GridCoordinate& start, const GridCoordinate& end);
-        bool TryFill(const GridCoordinate& pos);
 
         Grid<CellContents> mGrid;
         int32_t mLowestPoint = 0;
     };
 
-    void Cavern::Print() const
-    {
-        for (size_t y = 0; y < mGrid.GetHeight(); ++y)
-        {
-            std::string line;
-
-            for (size_t x = 0; x < mGrid.GetWidth(); ++x)
-            {
-                switch (mGrid.at({ static_cast<int32_t>(x),static_cast<int32_t>(y)}))
-                {
-                case CellContents::Empty:
-                    line += ".";
-                    break;
-
-                case CellContents::Rock:
-                    line += "#";
-                    break;
-                    
-                case CellContents::Sand:
-                    line += "o";
-                    break;
-                }
-            }
-
-            std::cout << line << "\n";
-        }
-    }
-
     void Cavern::AddRock(const std::vector<GridCoordinate>& rock)
     {
-        if (rock.empty())
-        {
-            return;
-        }
-
-        GridCoordinate lastRockPiece = rock.at(0) + kRockXOffset;
+        assert(!rock.empty());
+        
+        GridCoordinate lastRockPiece = rock.at(0);
 
         mGrid.at(lastRockPiece) = CellContents::Rock;
         mLowestPoint = std::max(mLowestPoint, lastRockPiece.y);
-        
 
         for (auto iter = std::next(rock.begin()); iter != rock.end(); ++iter)
         {
-            GridCoordinate nextRockPiece = (*iter) + kRockXOffset;
-            FillAllPieces(lastRockPiece, nextRockPiece);
+            FillAllPieces(lastRockPiece, *iter);
             mLowestPoint = std::max(mLowestPoint, lastRockPiece.y);
-            lastRockPiece = nextRockPiece;
+            lastRockPiece = *iter;
         }
     }
 
     void Cavern::FillAllPieces(const GridCoordinate& start, const GridCoordinate& end)
     {
         assert((start.x == end.x)|| (start.y == end.y));
-        const GridOffset distance = end.Distance(start);
-        const GridOffset moveDirection = NormalizeOffset(distance);
+        const GridOffset moveDirection = NormalizeOffset(end.Distance(start));
 
         GridCoordinate current = start;
         while (current != end)
@@ -108,16 +71,8 @@ namespace DayFourteen2022
             current = current + moveDirection;
             mGrid.at(current) = CellContents::Rock;
         }
-
     }
 
-    //------------------------------------------------------------------------------
-    Cavern::Cavern()
-        : mGrid(kGridWidth, kGridHeight, CellContents::Empty)
-    {
-
-    }
-    
     SimulateResult Cavern::SimulateSand()
     {
         GridCoordinate sandPos = kSandSource;
@@ -130,24 +85,20 @@ namespace DayFourteen2022
             sandPos = down;
             if (mGrid.at(sandPos) != CellContents::Empty)
             {
-                // try left/down
+                // cant fall down, try left/down
                 sandPos = ShiftOnGrid(down, GridDirection::Left);
 
                 if (mGrid.at(sandPos) != CellContents::Empty)
                 {
-                    // try right/down
+                    // cant fall left try right/down
                     sandPos = ShiftOnGrid(down, GridDirection::Right);
 
                     if (mGrid.at(sandPos) != CellContents::Empty)
                     {
+                        // coming to a stop.
                         mGrid.at(prevCoord) = CellContents::Sand;
 
-                        if (prevCoord == kSandSource)
-                        {
-                            return SimulateResult::Clogged;
-                        }
-
-                        return SimulateResult::Stopped;
+                        return (prevCoord == kSandSource) ? SimulateResult::Clogged : SimulateResult::Stopped;
                     }
                 }
             }
@@ -155,6 +106,8 @@ namespace DayFourteen2022
 
         return SimulateResult::Abyss;
     }
+
+ 
     void ParseCavern(const std::filesystem::path& filename, Cavern& cavern)
     {
         const auto input = StringUtils::SplitFile(filename);
@@ -202,15 +155,11 @@ namespace DayFourteen2022
         Cavern cavern;
         ParseCavern(filename, cavern);
 
-        const auto lowestPoint = cavern.GetLowestPoint();
-
-        std::vector<GridCoordinate> rockFloor;
-        const GridCoordinate leftFloor{ 0 - kRockXOffset.dX, lowestPoint+2 };
-        const GridCoordinate rightFloor{(kGridWidth-2) - kRockXOffset.dX, lowestPoint + 2 };
-
-        rockFloor.push_back(leftFloor);
-        rockFloor.push_back(rightFloor);
-        cavern.AddRock(rockFloor);
+        {
+            const auto lowestPoint = cavern.GetLowestPoint();
+            const std::vector<GridCoordinate> rockFloor{ GridCoordinate{0, lowestPoint + 2}, GridCoordinate{(kGridWidth - 2), lowestPoint + 2} };
+            cavern.AddRock(rockFloor);
+        }
 
 
        // cavern.Print();
@@ -220,10 +169,8 @@ namespace DayFourteen2022
             ++sandCount;
         }
 
-
         std::cout << "The Number of Grains of sands until clogged is " << sandCount << "\n";
 
         return { {sandCount}, {&CompareAny<uint32_t>} };
-
     }
 }

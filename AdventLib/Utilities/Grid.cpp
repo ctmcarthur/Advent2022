@@ -17,11 +17,6 @@ GridOffset GridCoordinate::Distance(const GridCoordinate& rhs) const
     return { static_cast<int32_t>(x - rhs.x), static_cast<int32_t>(y - rhs.y)};
 }
 
-constexpr GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs)
-{
-    return { lhs.x + rhs.dX, lhs.y + rhs.dY };
-}
-
 //------------------------------------------------------------------------------
 GridOffset NormalizeOffset(const GridOffset& offset)
 {
@@ -77,8 +72,8 @@ std::optional<GridCoordinate> TryShiftOnGrid(GridCoordinate pos, GridDirection d
 
     if ((ret.x < 0) ||
         (ret.y < 0) ||
-        (ret.x >= width) ||
-        (ret.y >= height))
+        (static_cast<size_t>(ret.x) >= width) ||
+        (static_cast<size_t>(ret.y) >= height))
     {
         return {};
     }

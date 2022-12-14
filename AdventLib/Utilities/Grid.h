@@ -23,7 +23,7 @@ public:
 };
 
 
-constexpr GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs);
+constexpr GridCoordinate operator+(const GridCoordinate& lhs, const GridOffset& rhs) { return { lhs.x + rhs.dX, lhs.y + rhs.dY }; }
 GridOffset NormalizeOffset(const GridOffset& offset); // turns an offset into a direction
 
 
@@ -81,16 +81,20 @@ public:
     //------------------------------------------------------------------------------
     [[nodiscard]] T& at(GridCoordinate location)
     {
-        assert(location.x < mWidth);
-        assert(location.y < mHeight);
+        assert(location.x >= 0);
+        assert(location.y >= 0);
+        assert(static_cast<size_t>(location.x) < mWidth);
+        assert(static_cast<size_t>(location.y) < mHeight);
 
         return mGrid.at(location.y * mWidth + location.x);
     }
 
     [[nodiscard]] const T& at(GridCoordinate location) const
     {
-        assert(location.x < mWidth);
-        assert(location.y < mHeight);
+        assert(location.x >= 0);
+        assert(location.y >= 0);
+        assert(staic_cast<size_t>(location.x) < mWidth);
+        assert(staic_cast<size_t>(location.y) < mHeight);
 
         return mGrid.at(location.y * mWidth + location.x);
     }

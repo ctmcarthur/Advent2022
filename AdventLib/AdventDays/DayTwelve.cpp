@@ -25,7 +25,7 @@ namespace DayTwelve2022
         HeightMap(size_t width, size_t height);
 
         Node& GetNode(GridCoordinate location);
-        uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
+        [[nodiscard]] uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc) const;
         void GenerateAdjacencies(AdjacenyFunc adjacencyFunc);
        
         Grid<Node> mNodes;
@@ -40,7 +40,7 @@ namespace DayTwelve2022
     {
     public:
         explicit BreadthFirstDistance(const Grid<Node>& grid);
-        uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
+        [[nodiscard]] uint32_t FindDistance(const Node& startNode, GoalFunc goalFunc);
 
     private:
 
@@ -96,7 +96,7 @@ namespace DayTwelve2022
         }
     }
 
-    uint32_t HeightMap::FindDistance(const Node& startNode, GoalFunc goalFunc)
+    uint32_t HeightMap::FindDistance(const Node& startNode, GoalFunc goalFunc) const
     {
         BreadthFirstDistance findAlg(mNodes);
         return findAlg.FindDistance(startNode, goalFunc);
@@ -193,13 +193,13 @@ namespace DayTwelve2022
 
         HeightMap heightMap(maxWidth, mapHeight);
         
-        for (size_t x = 0; x < maxWidth; ++x)
+        for (size_t xPos = 0; xPos < maxWidth; ++xPos)
         {   
-            for (size_t y = 0; y < mapHeight; ++y)
+            for (size_t yPos = 0; yPos < mapHeight; ++yPos)
             {
-                const GridCoordinate coord{ static_cast<int32_t>(x), static_cast<int32_t>(y) };
+                const GridCoordinate coord{ static_cast<int32_t>(xPos), static_cast<int32_t>(yPos) };
                 auto& node = heightMap.GetNode(coord);
-                char height = input[y][x];
+                char height = input[yPos][xPos];
 
                 if (height == kStartChar)
                 {

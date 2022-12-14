@@ -16,13 +16,13 @@ namespace DayThirteen2022
 
     PacketData::PacketData(int32_t value)
         : mIsList(false)
+        , mData(value)
     {
-        mData = value;
     }
 
     PacketData& PacketData::AddPacket(const PacketData& packet)
     {
-        if (mIsList == false)
+        if (mIsList)
         {
             mData = PacketList();
         }
@@ -128,8 +128,8 @@ namespace DayThirteen2022
     class PacketReader
     {
     public:
-        size_t SumCorrectPairs() const;
-        size_t CountPairsLessThan(const PacketData& comparePacket) const;
+        [[nodiscard]] size_t SumCorrectPairs() const;
+        [[nodiscard]] size_t CountPairsLessThan(const PacketData& comparePacket) const;
         std::vector<std::pair<PacketData, PacketData>> mPackets;
     };
 
