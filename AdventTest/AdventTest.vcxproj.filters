@@ -30,6 +30,9 @@
     <ClCompile Include="TestDayFourteen.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="TestUtils\TestRangeSet.cpp">
+      <Filter>Tests\TestUtils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -37,6 +40,9 @@
   <ItemGroup>
     <Filter Include="Tests">
       <UniqueIdentifier>{508ced44-b33f-47c8-b368-6439848cf236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\TestUtils">
+      <UniqueIdentifier>{83988f10-d948-4183-afe9-6ca6909181db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

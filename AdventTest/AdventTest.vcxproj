@@ -58,6 +58,7 @@
     <ClCompile Include="TestDaySeven.cpp" />
     <ClCompile Include="TestDaySix.cpp" />
     <ClCompile Include="TestDayThirteen.cpp" />
+    <ClCompile Include="TestUtils\TestRangeSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AdventLib\AdventLib.vcxproj">

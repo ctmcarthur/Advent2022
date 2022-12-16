@@ -164,6 +164,7 @@
     <ClInclude Include="AdventDay.h" />
     <ClInclude Include="AdventDays\DayEight.h" />
     <ClInclude Include="AdventDays\DayEleven.h" />
+    <ClInclude Include="AdventDays\DayFifteen.h" />
     <ClInclude Include="AdventDays\DayFive.h" />
     <ClInclude Include="AdventDays\DayFourteen.h" />
     <ClInclude Include="AdventDays\DayNine.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Utilities\EnumArray.h" />
     <ClInclude Include="Utilities\Grid.h" />
     <ClInclude Include="Utilities\Hashing.h" />
+    <ClInclude Include="Utilities\Range.h" />
     <ClInclude Include="Utilities\StringUtils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +186,7 @@
     <ClCompile Include="AdventDay.cpp" />
     <ClCompile Include="AdventDays\DayEight.cpp" />
     <ClCompile Include="AdventDays\DayEleven.cpp" />
+    <ClCompile Include="AdventDays\DayFifteen.cpp" />
     <ClCompile Include="AdventDays\DayFive.cpp" />
     <ClCompile Include="AdventDays\DayFour.cpp" />
     <ClCompile Include="AdventDays\DayFourteen.cpp" />
@@ -204,6 +207,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utilities\Grid.cpp" />
+    <ClCompile Include="Utilities\Range.cpp" />
     <ClCompile Include="Utilities\StringUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

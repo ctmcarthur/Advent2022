@@ -17,6 +17,7 @@ class GridCoordinate
 public:
     bool operator==(const GridCoordinate& rhs) const;
     GridOffset Distance(const GridCoordinate& rhs) const;
+    int32_t ManhattenDistance(const GridCoordinate& rhs) const;
 
     int32_t x = 0;
     int32_t y = 0;

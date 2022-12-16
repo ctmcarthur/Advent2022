@@ -17,6 +17,11 @@ GridOffset GridCoordinate::Distance(const GridCoordinate& rhs) const
     return { static_cast<int32_t>(x - rhs.x), static_cast<int32_t>(y - rhs.y)};
 }
 
+int32_t GridCoordinate::ManhattenDistance(const GridCoordinate& rhs) const
+{
+    return std::abs(x - rhs.x) + std::abs(y - rhs.y);
+}
+
 //------------------------------------------------------------------------------
 GridOffset NormalizeOffset(const GridOffset& offset)
 {
